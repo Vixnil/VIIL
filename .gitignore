@@ -27,6 +27,12 @@
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
+
+# Ignore things I do not think are required
+*.vs/*
+*bin/*
+*bin_inter/*
+*.vcxproj*
+

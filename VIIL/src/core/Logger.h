@@ -6,9 +6,7 @@
 
 namespace VIIL
 {
-	class Logger;
-
-	enum class LEVEL : int
+	enum class VIIL_API LEVEL : int
 	{
 		LV_TRACE = 0,
 		LV_INFO,
@@ -18,7 +16,7 @@ namespace VIIL
 		LV_UNKNOWN
 	};
 
-	struct LogConfig
+	struct VIIL_API LogConfig
 	{
 		const std::string logName;
 		const std::string logPatrn;

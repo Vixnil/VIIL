@@ -34,7 +34,8 @@ namespace VIIL
 		bool initialize()
 		{
 			glfwSetErrorCallback(glfw_error_callback);
-			return glfwInit();
+			int value = glfwInit();
+			return value;
 		}
 
 		~WindowsGraphics()

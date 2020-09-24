@@ -30,9 +30,11 @@ namespace VIIL
 		//glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
 		//glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
 		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+		//int value = glfwInit();
+		//glfwDefaultWindowHints();
 
-		glfwDefaultWindowHints();
 
+		
 		windowHndl = glfwCreateWindow(wData.width, wData.height, wData.title.c_str(), NULL, NULL);
 
 		if (!windowHndl)
@@ -46,8 +48,8 @@ namespace VIIL
 		//glfwSetWindowCloseCallback(windowHndl, glfw_window_close_callback);
 
 		glfwMakeContextCurrent(windowHndl);
-		glfwSetWindowUserPointer(windowHndl, &wData);
-		glfwSwapInterval(1);
+	//	glfwSetWindowUserPointer(windowHndl, &wData);
+	//	glfwSwapInterval(1);
 	}
 
 	WindowsWdw::~WindowsWdw()

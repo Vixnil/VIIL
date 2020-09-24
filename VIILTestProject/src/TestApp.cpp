@@ -1,15 +1,14 @@
 #include <VIIL.h>
+#include <memory>
 
 class TestApp : public VIIL::Application
 {
 
 public:
 
-	TestApp():
-		Application(VIIL::LEVEL::LV_TRACE, "TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE)
-	{
-
-	}
+	TestApp(VIIL::Window::WindowData windDef):
+		Application(VIIL::LEVEL::LV_TRACE, VIIL::LogConfig("TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE), windDef)
+	{}
 
 	~TestApp()
 	{
@@ -18,7 +17,13 @@ public:
 
 };
 
-VIIL::Application* VIIL::createApplication()
+std::unique_ptr<VIIL::Application> VIIL::createApplication()
 {
-	return new TestApp();
+	VIIL::Window::WindowData windDef;
+	
+	windDef.title = "MyTestApplication";
+	windDef.height = 640;
+	windDef.width = 480;
+
+	return std::make_unique<TestApp>(windDef);
 }

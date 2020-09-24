@@ -6,6 +6,11 @@
 	#else
 		#define VIIL_API __declspec(dllimport)
 	#endif
+
+	#include "core/platform/windows/WindowsGraphics.h"
+	#define VIIL_PLATFORM_GRAPHICS std::make_unique<VIIL::WindowsGraphics>()
 #else
 	#error BuildFailed: Unsupported platform
 #endif
+
+#define BIT(x) (1 << x)

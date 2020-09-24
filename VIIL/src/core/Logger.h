@@ -1,7 +1,6 @@
 #pragma once
 
-#include <memory>
-#include "core.h"
+#include "standardUse.h"
 #include "spdlog/spdlog.h"
 
 namespace VIIL

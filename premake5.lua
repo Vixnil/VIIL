@@ -4,6 +4,7 @@ workspace "VIIL"
                    "Release"}
 
 outDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+glfwDir = "%{prj.name}/lib/platform/%{cfg.system}-%{cfg.architecture}/glfw-3.3.2"
 
 project "VIIL"
     location "VIIL"
@@ -12,9 +13,22 @@ project "VIIL"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
+    pchheader "standardUse.h"
+    pchsource "VIIL/src/standardUse.cpp"
+
     files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
 
-    includedirs{"%{prj.name}/lib/spdlog/include"}
+    includedirs{ "%{prj.name}/src", 
+                 "%{prj.name}/lib/spdlog/include",
+                 (glfwDir .. "/include")}
+
+    libdirs {"%{prj.name}/lib/**"}
+
+    links
+    {
+        "glfw3",
+        "opengl32"
+    }
 
     filter "system:windows"
         cppdialect "C++17"
@@ -25,6 +39,7 @@ project "VIIL"
 
         postbuildcommands
         {
+            "{COPY} " .. glfwDir .. "/lib-vc2019" .. " ../bin/" .. outDir .. "/VIILTestProject",
             "{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outDir .. "/VIILTestProject"
         }
 
@@ -47,14 +62,23 @@ project "VIILTestProject"
 
     includedirs
     {
-        "VIIL/lib/spdlog/include",
+        "VIIL/lib/**/include",
         "VIIL/src"
     }
 
+    libdirs {"VIIL/lib/**"}
+
     links
     {
-        "VIIL"
+        "VIIL",
+        "glfw3",
+        "opengl32"
     }
+
+    filter "system:windows"
+        cppdialect "C++17"
+        staticruntime "Off"
+        systemversion "latest"
 
     filter "configurations:Debug"
         defines {"VIIL_PLATFORM_WINDOWS"}

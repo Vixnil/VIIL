@@ -66,9 +66,10 @@ project "VIIL"
 
     files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
 
-    includedirs{ "%{prj.name}/src", 
-                 "%{prj.name}/lib/spdlog/include",
-                 (glfwDir .. "/include")}
+    includedirs{ "%{prj.name}/src" 
+                 ,"%{prj.name}/lib/spdlog/include"
+                 ,"%{prj.name}/lib/MyGLFW/include"
+                 }
 
     libdirs {"%{prj.name}/lib/**"}
 
@@ -118,7 +119,44 @@ project "VIILTestProject"
     links
     {
         "VIIL",
-        "glfw3",
+        "MyGLFW",
+        "opengl32"
+    }
+
+    filter "system:windows"
+        cppdialect "C++17"
+        staticruntime "Off"
+        systemversion "latest"
+
+    filter "configurations:Debug"
+        defines {"VIIL_PLATFORM_WINDOWS"}
+        symbols "On"
+
+    filter "configurations:Release"
+        defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_RLS"}
+        optimize "On"
+
+project "GLFWTesting"
+    location "GLFWTesting"
+    kind "ConsoleApp"
+    language "C++"
+    targetdir ("bin/" .. outDir .. "/%{prj.name}")
+    objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
+
+    files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
+
+    includedirs
+    {
+        "VIIL/lib/**/include",
+        "VIIL/src"
+    }
+
+    libdirs {"VIIL/lib/**"}
+
+    links
+    {
+        "VIIL",
+        "MyGLFW",
         "opengl32"
     }
 

@@ -9,10 +9,15 @@ namespace VIIL
 	std::shared_ptr<spdlog::logger> Logger::engineLogger;
 	std::shared_ptr<spdlog::logger> Logger::appLogger;
 
-	void Logger::init(const LogConfig& engineConfiguration, const LogConfig& appConfiguration)
+	void Logger::initEngineLogger(const LogConfig& engineConfiguration)
 	{
 		engineLogger = spdlog::stdout_color_mt(engineConfiguration.logName);
 		engineLogger->set_pattern(engineConfiguration.logPatrn);
+		engineLogger->set_level(engineLevelToImplLevel(engineConfiguration.logLevel));
+	}
+
+	void Logger::init(const LogConfig& engineConfiguration, const LogConfig& appConfiguration)
+	{
 		engineLogger->set_level(engineLevelToImplLevel(engineConfiguration.logLevel));
 
 		VL_ENGINE_TRACE("Log initialized.");
@@ -49,6 +54,11 @@ namespace VIIL
 		appLogger->set_level(engineLevelToImplLevel(appConfiguration.logLevel));
 
 		VL_APP_TRACE("Log initialized.");
+	}
+
+	void Logger::changeLogLevel(LEVEL& logLevel)
+	{
+		engineLogger->set_level(engineLevelToImplLevel(logLevel));
 	}
 
 	spdlog::level::level_enum Logger::engineLevelToImplLevel(LEVEL logLevel)

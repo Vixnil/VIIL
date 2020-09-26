@@ -18,13 +18,23 @@ namespace VIIL
 
 	protected:
 		WindowData wData;
+		bool initialized;
 
 	public:
 
-		virtual ~Window() {}
+		virtual ~Window() 
+		{
+			VL_ENGINE_TRACE("Default window destructor called.");
+		}
+
 		virtual void update() = 0;
 		virtual inline unsigned int getWdith() { return wData.width; }
 		virtual inline unsigned int getHeight() { return wData.height; }
+
+		bool isInitialized()
+		{
+			return initialized;
+		}
 
 	};
 

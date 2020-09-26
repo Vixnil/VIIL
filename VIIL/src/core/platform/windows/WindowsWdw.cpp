@@ -32,17 +32,19 @@ namespace VIIL
 		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 		//int value = glfwInit();
 		//glfwDefaultWindowHints();
-
-
 		
 		windowHndl = glfwCreateWindow(wData.width, wData.height, wData.title.c_str(), NULL, NULL);
 
 		if (!windowHndl)
 		{
+			initialized = false;
 			//const char* message;
 			//int errorCode = glfwGetError(&message);
 			//VL_ENGINE_FATAL("GLFW Error: ", errorCode, " - ", message);
-			throw std::exception::exception("Failed to create window");
+
+			VL_ENGINE_FATAL("Failed to create window");
+			
+			return;
 		}
 
 		//glfwSetWindowCloseCallback(windowHndl, glfw_window_close_callback);
@@ -50,6 +52,7 @@ namespace VIIL
 		glfwMakeContextCurrent(windowHndl);
 	//	glfwSetWindowUserPointer(windowHndl, &wData);
 	//	glfwSwapInterval(1);
+		initialized = true;
 	}
 
 	WindowsWdw::~WindowsWdw()

@@ -17,12 +17,24 @@ namespace VIIL
 
 	public:
 		Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef);
-		~Application();
 
+		virtual ~Application();
 		virtual void run();
 		virtual void doStart();
+
+		virtual void prepareDelete() {}
+
 	};
 
-	std::unique_ptr<VIIL::Application> createApplication();
+	struct ApplicationDeleter
+	{
+		void operator()(Application* app) const
+		{
+			app->prepareDelete();
+			delete app;
+		}
+	};
+
+	std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> createApplication();
 }
 

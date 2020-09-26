@@ -8,7 +8,7 @@
 	#endif
 
 	#include "core/platform/windows/WindowsGraphics.h"
-	#define VIIL_PLATFORM_GRAPHICS std::make_unique<VIIL::WindowsGraphics>()
+	#define VIIL_PLATFORM_GRAPHICS VIIL::WindowsGraphics::initializeGraphics()
 #else
 	#error BuildFailed: Unsupported platform
 #endif

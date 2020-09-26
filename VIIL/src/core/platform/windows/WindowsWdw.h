@@ -10,7 +10,7 @@ namespace VIIL
 		GLFWwindow* windowHndl;
 	public:
 		WindowsWdw(const WindowData& winData);
-		~WindowsWdw();
+		virtual ~WindowsWdw();
 
 		void initializeWindow(const WindowData& winData);
 		void WindowsWdw::update();

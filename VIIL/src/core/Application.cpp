@@ -6,16 +6,22 @@ namespace VIIL
 		appIsRunning(true), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
 	{
 		initialWindowDef = windDef;
+		VL_ENGINE_TRACE("Created application");
 	}
 
 	Application::~Application()
 	{
-
+		VL_ENGINE_TRACE("Destroyed application");
 	}
 
 	void Application::doStart()
 	{
 		appWindow = createWindow(initialWindowDef);
+
+		if (!appWindow->isInitialized())
+		{
+			appIsRunning = false;
+		}
 	}
 
 	void Application::run()

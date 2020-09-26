@@ -10,14 +10,9 @@ public:
 		Application(VIIL::LEVEL::LV_TRACE, VIIL::LogConfig("TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE), windDef)
 	{}
 
-	~TestApp()
-	{
-
-	}
-
 };
 
-std::unique_ptr<VIIL::Application> VIIL::createApplication()
+std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplication()
 {
 	VIIL::Window::WindowData windDef;
 	
@@ -25,5 +20,5 @@ std::unique_ptr<VIIL::Application> VIIL::createApplication()
 	windDef.height = 640;
 	windDef.width = 480;
 
-	return std::make_unique<TestApp>(windDef);
+	return std::unique_ptr<TestApp, VIIL::ApplicationDeleter>(new TestApp(windDef));
 }

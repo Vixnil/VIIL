@@ -5,9 +5,8 @@ namespace VIIL
 {
 	void InitializeEngine(VIIL::RuntimeObjs* engineData, const VIIL::Application* app)
 	{
-
-		VIIL::LogConfig engineLogConfig("VIIL", Logger::defaultLogPattern, app->engineLogLevel);
-		VIIL::Logger::init(engineLogConfig, app->appLogConfig);
+		VIIL::LogConfig engineConfig("VIIL", VIIL::Logger::defaultLogPattern, app->engineLogLevel);
+		VIIL::Logger::init(engineConfig, app->appLogConfig);
 		engineData->g = VIIL_PLATFORM_GRAPHICS;
 
 		if (!engineData->g->getIsInit())

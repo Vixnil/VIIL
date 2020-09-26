@@ -41,10 +41,12 @@ namespace VIIL
 		
 	public:
 		static void init(const LogConfig& engineConfiguration, const LogConfig& appConfiguration);
+		static void initEngineLogger(const LogConfig& engineConfiguration);
 
 		inline static std::shared_ptr<spdlog::logger>& getEngineLogger() { return engineLogger; }
 		inline static std::shared_ptr<spdlog::logger>& getAppLogger() { return appLogger; }
 
+		void Logger::changeLogLevel(LEVEL& logLevel);
 	private:
 		static spdlog::level::level_enum engineLevelToImplLevel(LEVEL logLevel);
 	};

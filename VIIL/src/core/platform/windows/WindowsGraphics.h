@@ -25,24 +25,30 @@ namespace VIIL
 	{
 		
 	public:
-		WindowsGraphics() :
-			Graphics(initialize())
+		WindowsGraphics()
 		{
+		}
+
+		void initialize()
+		{
+			glfwSetErrorCallback(glfw_error_callback);
+			isInit = glfwInit();
+
 			VL_ENGINE_TRACE("Initialized windows graphics");
 		}
 
-		bool initialize()
+		static std::unique_ptr<Graphics, GraphicsDeleter> initializeGraphics()
 		{
-			glfwSetErrorCallback(glfw_error_callback);
-			int value = glfwInit();
-			return value;
+			std::unique_ptr<WindowsGraphics, GraphicsDeleter> gphs = std::unique_ptr<WindowsGraphics, GraphicsDeleter>(new WindowsGraphics());
+
+			gphs->initialize();
+			return gphs;
 		}
 
-		~WindowsGraphics()
+		void prepareDelete()
 		{
 			glfwTerminate();
 			VL_ENGINE_TRACE("Destroyed windows graphics");
 		}
-		
 	};
 }

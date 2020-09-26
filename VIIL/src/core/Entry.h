@@ -23,6 +23,8 @@ int main(int argc, char** argv)
 			InitializeEngine(engineData.get(), application.get());
 
 			application->run();
+
+			VL_ENGINE_TRACE("Post run.");
 		}
 		catch (std::exception e)
 		{

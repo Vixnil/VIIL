@@ -64,6 +64,8 @@ project "VIIL"
     pchheader "standardUse.h"
     pchsource "VIIL/src/standardUse.cpp"
 
+ignoredefaultlibraries {"NODEFAULTLIB"}
+
     files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
 
     includedirs{ "%{prj.name}/src" 

@@ -2,10 +2,16 @@
 
 namespace VIIL
 {
+
 	Application::Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef):
 		appIsRunning(true), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
 	{
+		VIIL::LogConfig engineConfig("VIIL", VIIL::Logger::defaultLogPattern, this->engineLogLevel);
+		VIIL::Logger::init(engineConfig, this->appLogConfig);
+
 		initialWindowDef = windDef;
+		appGraphics = VIIL_PLATFORM_GRAPHICS;
+
 		VL_ENGINE_TRACE("Created application");
 	}
 

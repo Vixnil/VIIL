@@ -7,7 +7,7 @@ int insanityCheck();
 
 int main()
 {
-    return bugReproduction();
+    return insanityCheck();
 }
 
 #include <GLFW/glfw3.h>

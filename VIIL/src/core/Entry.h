@@ -1,8 +1,6 @@
 #pragma once
 
 #include "standardUse.h"
-#include "RuntimeObjs.h"
-#include "InitializationServices.h"
 
 #ifdef VIIL_PLATFORM_WINDOWS
 
@@ -14,13 +12,9 @@ int main(int argc, char** argv)
 	{
 		VIIL::Logger::initEngineLogger(VIIL::LogConfig("VIIL", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE));
 
-		std::unique_ptr<VIIL::RuntimeObjs> engineData = std::make_unique<VIIL::RuntimeObjs>();
-		
 		try
 		{
 			std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> application = VIIL::createApplication();
-
-			InitializeEngine(engineData.get(), application.get());
 
 			application->run();
 

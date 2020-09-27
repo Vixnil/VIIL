@@ -8,6 +8,7 @@ namespace VIIL
 	{
 		//Class variable used to stop application running in the run method
 		bool appIsRunning;
+		std::unique_ptr<Graphics, GraphicsDeleter> appGraphics;
 		std::unique_ptr<Window> appWindow;
 		VIIL::Window::WindowData initialWindowDef;
 

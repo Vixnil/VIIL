@@ -1,7 +1,6 @@
 #pragma once
 #include "standardUse.h"
 #include "core/Window.h"
-#include <GLFW/glfw3.h>
 
 namespace VIIL
 {

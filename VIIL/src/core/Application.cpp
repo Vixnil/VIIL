@@ -63,6 +63,18 @@ namespace VIIL
 
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));
+
+		for (LayerVector::iterator layerItr = layerStack.end(); layerItr != layerStack.begin();)
+		{
+			--layerItr;
+			layerItr->get()->onEvent(event);
+
+			if (event.isHandled())
+			{
+				break;
+			}
+		}
+
 	}
 
 	bool Application::windowCloseHandler(WindowClose& event)

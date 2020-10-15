@@ -129,10 +129,12 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
     filter "configurations:Debug"
         optimize "Off"
         symbols "On"
+        buildoptions "/MDd"
 
     filter "configurations:Release"
         defines {"VIIL_BUILD_RLS"}
         optimize "On"
+        buildoptions "/MD"
 
 project "VIILTestProject"
     location "VIILTestProject"
@@ -166,10 +168,12 @@ project "VIILTestProject"
     filter "configurations:Debug"
         defines {"VIIL_PLATFORM_WINDOWS"}
         symbols "On"
+        buildoptions "/MDd"
 
     filter "configurations:Release"
         defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_RLS"}
         optimize "On"
+        buildoptions "/MDd"
 
 project "GLFWTesting"
     location "GLFWTesting"

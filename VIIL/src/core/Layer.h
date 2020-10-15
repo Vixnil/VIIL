@@ -16,11 +16,10 @@ namespace VIIL
 
 		virtual ~Layer() { VL_ENGINE_TRACE("Default layer destructor"); }
 		virtual void onAttached() {}
-		virtual void onDetach() {}
+		virtual void onDetached() {}
 		virtual void onUpdate() {}
 		virtual void onEvent(Event& event) {}
 
 		inline const std::string& getName() const { return name; }
 	};
-
 }

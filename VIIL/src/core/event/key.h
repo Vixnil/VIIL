@@ -56,7 +56,6 @@ namespace VIIL
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-
 	enum VIIL_API KeyCode : int
 	{
 		UNKNOWN = -1

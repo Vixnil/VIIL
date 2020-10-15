@@ -7,6 +7,7 @@ namespace VIIL
 	LayerStack::LayerStack()
 	{
 		layerInserter = layerList.begin();
+
 		VL_ENGINE_TRACE("Layer stack contructed");
 	}
 

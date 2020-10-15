@@ -1,9 +1,24 @@
 #pragma once
 
-#include "standardUse.h"
+#include "core/event/event.h"
 
 namespace VIIL
 {
+	enum MouseBtnCode : int
+	{
+		BTN_1 = 0
+		, BTN_2
+		, BTN_3
+		, BTN_4
+		, BTN_5
+		, BTN_6
+		, BTN_7
+		, BTN_8
+		, BTN_UNSUPPORTED
+		, BTN_LEFT = BTN_1
+		, BTN_RIGHT = BTN_2
+		, BTN_MIDDLE = BTN_3
+	};
 
 		class VIIL_API MouseButtonEvent : public Event
 		{
@@ -66,7 +81,7 @@ namespace VIIL
 			std::string ToString() const override
 			{
 				std::stringstream strm;
-				strm << getName() << ": " << "xDiff: " << xDiff << "yDiff: " << yDiff;
+				strm << getName() << ": " << "xDiff: " << xDiff << " yDiff: " << yDiff;
 				return strm.str();
 			}
 
@@ -89,11 +104,12 @@ namespace VIIL
 			std::string ToString() const override
 			{
 				std::stringstream strm;
-				strm << getName() << ": " << "x: " << x << "y: " << y;
+				strm << getName() << ": " << "x: " << x << " y: " << y;
 				return strm.str();
 			}
 
 			EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_Input)
 			EVENT_CLASS_TYPE(MouseMoved)
 		};
+
 }

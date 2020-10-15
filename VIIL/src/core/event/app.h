@@ -1,15 +1,9 @@
 #pragma once
 
-#include "standardUse.h"
+#include "core/event/event.h"
 
 namespace VIIL
 {
-      /*WindowClosed,
-		WindowResized,
-		WindowFocused,
-		WindowLostFocus,
-		WindowMoved
-	   */
 
 	class VIIL_API WindowClose : public Event
 	{

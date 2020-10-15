@@ -1,9 +1,9 @@
 #pragma once
 
 #include "standardUse.h"
+#include "Application.h"
 
 #ifdef VIIL_PLATFORM_WINDOWS
-
 extern std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplication();
 
 int main(int argc, char** argv)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "standardUse.h"
+
 struct GraphicsDeleter;
 
 namespace VIIL
@@ -22,4 +24,6 @@ namespace VIIL
 			delete gphs;
 		}
 	};
+
+	std::unique_ptr<Graphics, GraphicsDeleter> initializeGraphics();
 }

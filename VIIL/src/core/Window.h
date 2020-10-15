@@ -1,6 +1,9 @@
 #pragma once
 
 #include "standardUse.h"
+#include "core/event/app.h"
+#include "core/event/key.h"
+#include "core/event/mouse.h"
 
 namespace VIIL
 {
@@ -8,12 +11,15 @@ namespace VIIL
 	class VIIL_API Window
 	{
 	public:
+		using EventCallbackFn = std::function<void(Event&)>;
+
 		struct WindowData
 		{
 			std::string title;
 			int width, height;
 			bool isFullScreen;
 
+			EventCallbackFn callBackFn;
 		};
 
 	protected:
@@ -22,7 +28,7 @@ namespace VIIL
 
 	public:
 
-		virtual ~Window() 
+		~Window()
 		{
 			VL_ENGINE_TRACE("Default window destructor called.");
 		}
@@ -30,6 +36,8 @@ namespace VIIL
 		virtual void update() = 0;
 		virtual inline unsigned int getWdith() { return wData.width; }
 		virtual inline unsigned int getHeight() { return wData.height; }
+
+		virtual void setEventCallback(const EventCallbackFn& callback) = 0;
 
 		bool isInitialized()
 		{

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "standardUse.h"
+
 namespace VIIL
 {
 
@@ -29,23 +31,23 @@ namespace VIIL
 		EVTCAT_MouseButton = BIT(4)
 	};
 
-#define EVENT_CLASS_TYPE(type) static EventType getStaticType() { return EventType::##type; }\
+	#define EVENT_CLASS_TYPE(type) static EventType getStaticType() { return EventType::##type; }\
                                virtual EventType getType() const override { return getStaticType(); }\
                                virtual const char* getName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(cat) virtual int getCategoryFlags() const override { return cat; }
+	#define EVENT_CLASS_CATEGORY(cat) virtual int getCategoryFlags() const override { return cat; }
 
 	class VIIL_API Event
 	{
 		friend class EventDispatcher;
 
 	public:
-		virtual EventType getType() const = 0;
+		virtual VIIL::EventType getType() const = 0;
 		virtual const char* getName() const = 0;
 		virtual int getCategoryFlags() const = 0;
 		virtual std::string ToString() const { return getName(); }
 
-		inline bool isCategory(EventCategory cat)
+		inline bool isCategory(VIIL::EventCategory cat)
 		{
 			return getCategoryFlags() &cat;
 		}
@@ -60,7 +62,7 @@ namespace VIIL
 		Event& event;
 
 		template<typename T>
-		using EventHandler = std::function<bool(T*)>;
+		using EventHandler = std::function<bool(T&)>;
 
 	public:
 		EventDispatcher(Event& evnt):
@@ -72,10 +74,10 @@ namespace VIIL
 		 {
 			 if (event.getType() == T::getStaticType())
 			 {
-				 event.handled = handler(*(*T)&event);
+				 event.handled = handler((*(T*)&event));
 				 return true;
 			 }
-
+			  
 			 return false;
 		 }
 

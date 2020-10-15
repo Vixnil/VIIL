@@ -1,6 +1,9 @@
 #pragma once
+
 #include "standardUse.h"
+#include "LayerStack.h"
 #include "Window.h"
+#include "Graphics.h"
 
 namespace VIIL
 {
@@ -11,20 +14,27 @@ namespace VIIL
 		std::unique_ptr<Graphics, GraphicsDeleter> appGraphics;
 		std::unique_ptr<Window> appWindow;
 		VIIL::Window::WindowData initialWindowDef;
+		VIIL::LayerStack layerStack;
+
+		using layerPtnr = std::shared_ptr<VIIL::Layer>;
 
 	public:
 		LogConfig appLogConfig;
 		VIIL::LEVEL engineLogLevel;
 
-	public:
 		Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef);
 
 		virtual ~Application();
-		virtual void run();
-		virtual void doStart();
+		void run();
+		void doStart();
+		void OnEvent(Event& event);
+		void pushLayer(layerPtnr layer);
+		void pushOverlay(layerPtnr overlay);
 
 		virtual void prepareDelete() {}
 
+	private:
+		bool windowCloseHandler(WindowClose& event);
 	};
 
 	struct ApplicationDeleter

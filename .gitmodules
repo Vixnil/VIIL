@@ -6,3 +6,7 @@
 	path = VIIL/lib/glfw
 	url = https://github.com/glfw/glfw.git
 	branch = 3.3-stable
+[submodule "VIIL/lib/imgui"]
+	path = VIIL/lib/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = master

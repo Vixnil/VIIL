@@ -1,7 +1,10 @@
 #include "standardUse.h"
+#include "Application.h"
 
 namespace VIIL
 {
+
+#define bindEventHandler(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 	Application::Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef):
 		appIsRunning(true), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
@@ -10,7 +13,7 @@ namespace VIIL
 		VIIL::Logger::init(engineConfig, this->appLogConfig);
 
 		initialWindowDef = windDef;
-		appGraphics = VIIL_PLATFORM_GRAPHICS;
+		appGraphics = initializeGraphics();
 
 		VL_ENGINE_TRACE("Created application");
 	}
@@ -28,6 +31,10 @@ namespace VIIL
 		{
 			appIsRunning = false;
 		}
+		else
+		{
+			appWindow->setEventCallback(bindEventHandler(OnEvent));
+		}
 	}
 
 	void Application::run()
@@ -38,10 +45,41 @@ namespace VIIL
 
 		while (appIsRunning)
 		{
+
+			for (layerPtnr layer : layerStack)
+			{
+				layer->onUpdate();
+			}
+
 			appWindow->update();
 		}
 
 		VL_ENGINE_TRACE("Application stopped, shutting down.");
+	}
+
+	void Application::OnEvent(Event& event)
+	{
+		VL_ENGINE_TRACE("Event occured: {0}", event.ToString());
+
+		EventDispatcher dispatcher(event);
+		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));
+	}
+
+	bool Application::windowCloseHandler(WindowClose& event)
+	{
+		appIsRunning = false;
+
+		return true;
+	}
+
+	void Application::pushLayer(layerPtnr layer)
+	{
+		layerStack.addLayer(layer);
+	}
+
+	void Application::pushOverlay(layerPtnr overlay)
+	{
+		layerStack.addOverlay(overlay);
 	}
 
 }

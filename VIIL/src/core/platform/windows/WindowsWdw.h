@@ -1,6 +1,8 @@
 #pragma once
+
 #include "standardUse.h"
 #include "core/Window.h"
+#include "core/platform/windows/WindowsGraphics.h"
 
 namespace VIIL
 {
@@ -13,6 +15,9 @@ namespace VIIL
 
 		void initializeWindow(const WindowData& winData);
 		void WindowsWdw::update();
+
+		inline void setEventCallback(const EventCallbackFn& callback) override { wData.callBackFn = callback; }
+
 	};
 }
 

@@ -6,4 +6,5 @@
 #include "core/Logger.h"
 #include "core/Entry.h"
 #include "core/Layer.h"
+#include "core/input/inputValues.h"
 #include "core/UserInterface/imguiLayer.h"

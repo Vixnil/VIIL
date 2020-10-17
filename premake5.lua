@@ -124,13 +124,18 @@ project "VIIL"
 
 ignoredefaultlibraries {"NODEFAULTLIB"}
 
-    files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
+    files 
+	{"%{prj.name}/src/**.h"
+	, "%{prj.name}/src/**.cpp"
+	, "%{prj.name}/lib/glm/glm/**.hpp"
+	, "%{prj.name}/lib/glm/glm/**.inl"}
 
     includedirs {"%{prj.name}/src"
                  ,"%{prj.name}/lib/spdlog/include"
                  ,"%{prj.name}/lib/MyGLFW/include"
                  ,"%{prj.name}/lib/glad/include"
                  ,"%{prj.name}/lib/imgui"
+				 ,"%{prj.name}/lib/glm"
                 }
 
     libdirs {"%{prj.name}/lib/**"}
@@ -172,12 +177,15 @@ project "VIILTestProject"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
-    files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
+    files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"
+	, "VIIL/lib/glm/glm/**.hpp"
+	, "VIIL/lib/glm/glm/**.inl"}
 
     includedirs
     {
         "VIIL/lib/**/include",
         "VIIL/src"
+		,"VIIL/lib/glm"
     }
 
     libdirs {"VIIL/lib/**"}

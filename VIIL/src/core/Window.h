@@ -34,7 +34,7 @@ namespace VIIL
 		}
 
 		virtual void update() = 0;
-		virtual inline unsigned int getWdith() { return wData.width; }
+		virtual inline unsigned int getWidth() { return wData.width; }
 		virtual inline unsigned int getHeight() { return wData.height; }
 
 		virtual void setEventCallback(const EventCallbackFn& callback) = 0;

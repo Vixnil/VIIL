@@ -12,7 +12,9 @@ namespace VIIL
 		std::string name;
 
 	public:
-		Layer(const std::string& name = "Default") : name(name) { VL_ENGINE_TRACE("Default layer constructor"); }
+		Layer(const std::string& name = "Default") : 
+			name(name)
+		{ VL_ENGINE_TRACE("Default layer constructor"); }
 
 		virtual ~Layer() { VL_ENGINE_TRACE("Default layer destructor"); }
 		virtual void onAttached() {}

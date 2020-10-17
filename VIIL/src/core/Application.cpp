@@ -1,10 +1,14 @@
 #include "standardUse.h"
 #include "Application.h"
+#include "Window.h"
+#include "input/inputValues.h"
 
 namespace VIIL
 {
 
 #define bindEventHandler(x) std::bind(&Application::x, this, std::placeholders::_1)
+
+	Application* Application::applicationInstance = nullptr;
 
 	Application::Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef):
 		appIsRunning(true), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
@@ -14,6 +18,8 @@ namespace VIIL
 
 		initialWindowDef = windDef;
 		appGraphics = initializeGraphics();
+		appWindow = createWindow(initialWindowDef);
+		applicationInstance = this;
 
 		VL_ENGINE_TRACE("Created application");
 	}
@@ -25,8 +31,6 @@ namespace VIIL
 
 	void Application::doStart()
 	{
-		appWindow = createWindow(initialWindowDef);
-
 		if (!appWindow->isInitialized())
 		{
 			appIsRunning = false;
@@ -51,6 +55,13 @@ namespace VIIL
 				layer->onUpdate();
 			}
 
+			MousePosition& pos = InputCache::get().getMousePosition();
+
+			if (pos.posX > 200)
+			{
+				VL_ENGINE_TRACE("Mouse is at x position greater than 200.");
+			}
+
 			appWindow->update();
 		}
 
@@ -63,23 +74,27 @@ namespace VIIL
 
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));
-
-		for (LayerVector::iterator layerItr = layerStack.end(); layerItr != layerStack.begin();)
+		
+		if (!event.isHandled())
 		{
-			--layerItr;
-			layerItr->get()->onEvent(event);
-
-			if (event.isHandled())
+			for (LayerVector::iterator layerItr = layerStack.end(); layerItr != layerStack.begin();)
 			{
-				break;
+				--layerItr;
+				layerItr->get()->onEvent(event);
+
+				if (event.isHandled())
+				{
+					break;
+				}
 			}
 		}
-
 	}
 
 	bool Application::windowCloseHandler(WindowClose& event)
 	{
 		appIsRunning = false;
+
+		event.setHandled(true);
 
 		return true;
 	}
@@ -87,11 +102,13 @@ namespace VIIL
 	void Application::pushLayer(layerPtnr layer)
 	{
 		layerStack.addLayer(layer);
+		layer->onAttached();
 	}
 
 	void Application::pushOverlay(layerPtnr overlay)
 	{
 		layerStack.addOverlay(overlay);
+		overlay->onAttached();
 	}
 
 }

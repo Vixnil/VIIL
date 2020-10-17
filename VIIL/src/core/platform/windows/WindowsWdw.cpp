@@ -34,12 +34,7 @@ namespace VIIL
 		if (!windowHndl)
 		{
 			initialized = false;
-			//const char* message;
-			//int errorCode = glfwGetError(&message);
-			//VL_ENGINE_FATAL("GLFW Error: ", errorCode, " - ", message);
-
 			VL_ENGINE_FATAL("Failed to create window");
-			
 			return;
 		}
 
@@ -53,6 +48,16 @@ namespace VIIL
 		glfwMakeContextCurrent(windowHndl);
 		glfwSetWindowUserPointer(windowHndl, &wData);
 		glfwSwapInterval(1);
+
+		if (!gladLoadGL(glfwGetProcAddress))
+		{
+			initialized = false;
+			VL_ENGINE_FATAL("Failed to initialize GLAD");
+			return;
+		}
+
+		int returnValue = glfwGetKey(windowHndl, 7);
+
 		initialized = true;
 	}
 

@@ -4,6 +4,7 @@
 #include "LayerStack.h"
 #include "Window.h"
 #include "Graphics.h"
+#include "core/input/inputValues.h"
 
 namespace VIIL
 {
@@ -15,6 +16,8 @@ namespace VIIL
 		std::unique_ptr<Window> appWindow;
 		VIIL::Window::WindowData initialWindowDef;
 		VIIL::LayerStack layerStack;
+
+		static Application* applicationInstance;
 
 		using layerPtnr = std::shared_ptr<VIIL::Layer>;
 
@@ -30,6 +33,9 @@ namespace VIIL
 		void OnEvent(Event& event);
 		void pushLayer(layerPtnr layer);
 		void pushOverlay(layerPtnr overlay);
+
+		inline static Application& getApp() { return *applicationInstance; }
+		inline Window& getWindow() { return *(appWindow.get()); }
 
 		virtual void prepareDelete() {}
 

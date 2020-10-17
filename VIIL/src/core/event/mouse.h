@@ -1,115 +1,107 @@
 #pragma once
 
+#include "core/input/inputValues.h"
 #include "core/event/event.h"
 
 namespace VIIL
 {
-	enum MouseBtnCode : int
+
+	class VIIL_API MouseButtonEvent : public Event
 	{
-		BTN_1 = 0
-		, BTN_2
-		, BTN_3
-		, BTN_4
-		, BTN_5
-		, BTN_6
-		, BTN_7
-		, BTN_8
-		, BTN_UNSUPPORTED
-		, BTN_LEFT = BTN_1
-		, BTN_RIGHT = BTN_2
-		, BTN_MIDDLE = BTN_3
+	protected:
+		VIIL_MouseCode code;
+
+		MouseButtonEvent(VIIL_MouseCode btnCode):
+			code(btnCode)
+		{}
+
+		EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_MouseButton | EVTCAT_Input)
+	};
+		
+	class VIIL_API MouseButtonPressedEvent : public MouseButtonEvent
+	{
+	public:
+		MouseButtonPressedEvent(VIIL_MouseCode btnCode):
+			MouseButtonEvent(btnCode)
+		{
+			InputCache::get().setMouseButtonPressed(btnCode, true);
+		}
+
+		std::string ToString() const override
+		{
+			std::stringstream strm;
+			strm << getName() << ": " << "button pressed: " << code;
+			return strm.str();
+		}
+
+		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-		class VIIL_API MouseButtonEvent : public Event
+	class VIIL_API MouseButtonReleasedEvent : public MouseButtonEvent
+	{
+	public:
+		MouseButtonReleasedEvent(VIIL_MouseCode btnCode) :
+			MouseButtonEvent(btnCode)
 		{
-		protected:
-			int code;
+			InputCache::get().setMouseButtonPressed(btnCode, false);
+		}
 
-			MouseButtonEvent(int btnCode):
-				code(btnCode)
-			{}
-
-			EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_MouseButton | EVTCAT_Input)
-		};
-		
-		class VIIL_API MouseButtonPressedEvent : public MouseButtonEvent
+		std::string ToString() const override
 		{
-		public:
-			MouseButtonPressedEvent(int btnCode):
-				MouseButtonEvent(btnCode)
-			{}
+			std::stringstream strm;
+			strm << getName() << ": " << "button released: " << code;
+			return strm.str();
+		}
 
-			std::string ToString() const override
-			{
-				std::stringstream strm;
-				strm << getName() << ": " << "button pressed: " << code;
-				return strm.str();
-			}
+		EVENT_CLASS_TYPE(MouseButtonReleased)
+	};
 
-			EVENT_CLASS_TYPE(MouseButtonPressed)
-		};
+	class VIIL_API MouseScrolledEvent : public Event
+	{
+		float xDiff, yDiff;
 
-		class VIIL_API MouseButtonReleasedEvent : public MouseButtonEvent
+	public:
+		MouseScrolledEvent(float xOffset, float yOffset):
+			xDiff(xOffset), yDiff(yOffset)
+		{}
+
+		inline float getXOffset() const { return xDiff; }
+		inline float getYOffset() const { return yDiff; }
+
+		std::string ToString() const override
 		{
-		public:
-			MouseButtonReleasedEvent(int btnCode) :
-				MouseButtonEvent(btnCode)
-			{}
+			std::stringstream strm;
+			strm << getName() << ": " << "xDiff: " << xDiff << " yDiff: " << yDiff;
+			return strm.str();
+		}
 
-			std::string ToString() const override
-			{
-				std::stringstream strm;
-				strm << getName() << ": " << "button released: " << code;
-				return strm.str();
-			}
+		EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_Input)
+		EVENT_CLASS_TYPE(MouseScrolled)
+	};
 
-			EVENT_CLASS_TYPE(MouseButtonReleased)
-		};
+	class VIIL_API MouseMovedEvent : public Event
+	{
+		float x, y;
 
-		class VIIL_API MouseScrolledEvent : public Event
+	public:
+		MouseMovedEvent(float x, float y):
+			x(x), y(y)
 		{
-			float xDiff, yDiff;
+			InputCache::get().setMousePosition(x, y);
+		}
 
-		public:
-			MouseScrolledEvent(float xOffset, float yOffset):
-				xDiff(xOffset), yDiff(yOffset)
-			{}
+		inline float getX() const { return x; }
+		inline float getY() const { return y; }
 
-			inline float getXOffset() const { return xDiff; }
-			inline float getYOffset() const { return yDiff; }
-
-			std::string ToString() const override
-			{
-				std::stringstream strm;
-				strm << getName() << ": " << "xDiff: " << xDiff << " yDiff: " << yDiff;
-				return strm.str();
-			}
-
-			EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_Input)
-			EVENT_CLASS_TYPE(MouseScrolled)
-		};
-
-		class VIIL_API MouseMovedEvent : public Event
+		std::string ToString() const override
 		{
-			float x, y;
+			std::stringstream strm;
+			strm << getName() << ": " << "x: " << x << " y: " << y;
+			return strm.str();
+		}
 
-		public:
-			MouseMovedEvent(float x, float y):
-				x(x), y(y)
-			{}
-
-			inline float getX() const { return x; }
-			inline float getY() const { return y; }
-
-			std::string ToString() const override
-			{
-				std::stringstream strm;
-				strm << getName() << ": " << "x: " << x << " y: " << y;
-				return strm.str();
-			}
-
-			EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_Input)
-			EVENT_CLASS_TYPE(MouseMoved)
-		};
+		EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_Input)
+		EVENT_CLASS_TYPE(MouseMoved)
+	};
 
 }

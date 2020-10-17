@@ -47,6 +47,7 @@ namespace VIIL
 		virtual int getCategoryFlags() const = 0;
 		virtual std::string ToString() const { return getName(); }
 		virtual bool isHandled() { return handled; }
+		virtual void setHandled(bool flag) { handled = flag; }
 
 		inline bool isCategory(VIIL::EventCategory cat)
 		{

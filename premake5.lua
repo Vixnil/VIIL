@@ -9,6 +9,33 @@ workspace "VIIL"
 outDir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 glfwDir = "%{prj.name}/lib/platform/%{cfg.system}-%{cfg.architecture}/glfw-3.3.2"
 
+project "Glad"
+    location "VIIL/lib/glad"
+    kind "StaticLib"
+    language "C"
+    targetdir ("bin/" .. outDir .. "/%{prj.name}")
+    objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.location}/include/glad/gl.h"
+        ,"%{prj.location}/include/KHR/khrplatform.h"
+        ,"%{prj.location}/src/gl.c"
+    }
+
+    includedirs {
+                 "%{prj.location}/include"
+                }
+
+    filter "configurations:Debug"
+        optimize "Off"
+        symbols "On"
+        buildoptions "/MDd"
+
+    filter "configurations:Release"
+        optimize "On"
+        buildoptions "/MD"
+
 project "MyGLFW"
     location "VIIL/lib/MyGLFW"
     kind "StaticLib"
@@ -52,7 +79,7 @@ project "MyGLFW"
             "_CRT_SECURE_NO_WARNINGS"
         }
 
-project "imgui"
+project "ImGui"
     location "VIIL/lib/imgui"
     kind "StaticLib"
     language "C++"
@@ -74,7 +101,7 @@ project "imgui"
     }
 
     includedirs {
-                 "%{prj.name}/lib/MyGLFW/include"
+                 "%{prj.location}"
                 }
 
     links
@@ -102,6 +129,7 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
     includedirs {"%{prj.name}/src"
                  ,"%{prj.name}/lib/spdlog/include"
                  ,"%{prj.name}/lib/MyGLFW/include"
+                 ,"%{prj.name}/lib/glad/include"
                  ,"%{prj.name}/lib/imgui"
                 }
 
@@ -111,7 +139,8 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
     {
         "MyGLFW"
         ,"opengl32"
-        ,"imgui"
+        ,"ImGui"
+        ,"Glad"
     }
 
     filter "system:windows"
@@ -158,6 +187,7 @@ project "VIILTestProject"
         "VIIL"
         ,"MyGLFW"
         ,"opengl32"
+        ,"ImGui"
     }
 
     filter "system:windows"
@@ -174,40 +204,3 @@ project "VIILTestProject"
         defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_RLS"}
         optimize "On"
         buildoptions "/MDd"
-
-project "GLFWTesting"
-    location "GLFWTesting"
-    kind "ConsoleApp"
-    language "C++"
-    targetdir ("bin/" .. outDir .. "/%{prj.name}")
-    objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
-
-    files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"}
-
-    includedirs
-    {
-        "VIIL/lib/**/include",
-        "VIIL/src"
-    }
-
-    libdirs {"VIIL/lib/**"}
-
-    links
-    {
-        "VIIL",
-        "MyGLFW",
-        "opengl32"
-    }
-
-    filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "Off"
-        systemversion "latest"
-
-    filter "configurations:Debug"
-        defines {"VIIL_PLATFORM_WINDOWS"}
-        symbols "On"
-
-    filter "configurations:Release"
-        defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_RLS"}
-        optimize "On"

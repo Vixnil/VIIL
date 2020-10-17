@@ -1,7 +1,6 @@
 #include <VIIL.h>
 #include <memory>
 
-
 class TestLayer : public VIIL::Layer
 {
 public:
@@ -13,12 +12,10 @@ public:
 
 	void onUpdate() override
 	{
-		VL_APP_TRACE("TestLayer Updated");
 	}
 
 	void onEvent(VIIL::Event& event) override
 	{
-		VL_APP_TRACE("TestLayer event received: {0}", event.ToString());
 	}
 
 };
@@ -31,9 +28,8 @@ public:
 	TestApp(VIIL::Window::WindowData windDef):
 		Application(VIIL::LEVEL::LV_TRACE, VIIL::LogConfig("TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE), windDef)
 	{
-		pushLayer(
-			std::shared_ptr<TestLayer>(new TestLayer())
-		);
+		pushLayer(std::shared_ptr<TestLayer>(new TestLayer()));
+	//	pushOverlay(std::shared_ptr<VIIL::ImGuiLayer>(new VIIL::ImGuiLayer()));
 	}
 
 };

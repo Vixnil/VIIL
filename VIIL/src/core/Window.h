@@ -8,7 +8,7 @@
 namespace VIIL
 {
 
-	class VIIL_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

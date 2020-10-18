@@ -5,7 +5,7 @@
 namespace VIIL
 {
 
-	class VIIL_API WindowClose : public Event
+	class WindowClose : public Event
 	{
 
 	public:
@@ -17,7 +17,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
-	class VIIL_API WindowResize : public Event
+	class WindowResize : public Event
 	{
 		unsigned int width, height;
 	public:
@@ -39,7 +39,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
-	class VIIL_API WindowFocus : public Event
+	class WindowFocus : public Event
 	{
 
 	public:
@@ -50,7 +50,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
-	class VIIL_API WindowLoseFocus : public Event
+	class WindowLoseFocus : public Event
 	{
 
 	public:
@@ -61,7 +61,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
-	class VIIL_API WindowMove : public Event
+	class WindowMove : public Event
 	{
 
 	public:

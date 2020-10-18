@@ -29,7 +29,7 @@ namespace VIIL
 	{
 
 		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2(Application::getApp().getWindow().getWidth(), Application::getApp().getWindow().getHeight());
+		io.DisplaySize = ImVec2((float)Application::getApp().getWindow().getWidth(), (float)Application::getApp().getWindow().getHeight());
 
 		ImGui::NewFrame();
 

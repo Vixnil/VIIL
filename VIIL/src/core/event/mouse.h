@@ -6,7 +6,7 @@
 namespace VIIL
 {
 
-	class VIIL_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	protected:
 		VIIL_MouseCode code;
@@ -18,7 +18,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_MouseButton | EVTCAT_Input)
 	};
 		
-	class VIIL_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(VIIL_MouseCode btnCode):
@@ -37,7 +37,7 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
-	class VIIL_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(VIIL_MouseCode btnCode) :
@@ -56,7 +56,7 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
 
-	class VIIL_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 		float xDiff, yDiff;
 
@@ -79,7 +79,7 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseScrolled)
 	};
 
-	class VIIL_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 		float x, y;
 

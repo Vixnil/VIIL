@@ -453,7 +453,7 @@ namespace VIIL
 	void mouseCursorPositionCallback(GLFWwindow* windowHandel, double xPos, double yPos)
 	{
 		Window::WindowData& winData = *(Window::WindowData*)glfwGetWindowUserPointer(windowHandel);
-		MouseMovedEvent event = VIIL::MouseMovedEvent(xPos, yPos);
+		MouseMovedEvent event = VIIL::MouseMovedEvent((float)xPos, (float)yPos);
 
 		winData.callBackFn(event);
 	}
@@ -462,7 +462,7 @@ namespace VIIL
 	{
 		Window::WindowData& winData = *(Window::WindowData*)glfwGetWindowUserPointer(windowHandel);
 
-		VIIL::MouseScrolledEvent event = VIIL::MouseScrolledEvent(xOffset, yOffset);
+		VIIL::MouseScrolledEvent event = VIIL::MouseScrolledEvent((float)xOffset, (float)yOffset);
 		winData.callBackFn(event);
 	}
 

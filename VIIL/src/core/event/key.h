@@ -5,7 +5,7 @@
 
 namespace VIIL
 {
-	class VIIL_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	protected:
 		VIIL_KeyCode keyCode;
@@ -20,7 +20,7 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Key | EVTCAT_Input)
 	};
 
-	class VIIL_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	protected:
 		int numRepeated;
@@ -42,7 +42,7 @@ namespace VIIL
 		EVENT_CLASS_TYPE(KeyPressed)
 	};
 
-	class VIIL_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(VIIL_KeyCode code):

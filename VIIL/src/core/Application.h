@@ -8,7 +8,7 @@
 
 namespace VIIL
 {
-	class VIIL_API Application
+	class Application
 	{
 		//Class variable used to stop application running in the run method
 		bool appIsRunning;

@@ -13,6 +13,7 @@ project "Glad"
     location "VIIL/lib/glad"
     kind "StaticLib"
     language "C"
+    staticruntime "on"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
@@ -29,17 +30,16 @@ project "Glad"
 
     filter "configurations:Debug"
         optimize "Off"
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
 
     filter "configurations:Release"
-        optimize "On"
-        buildoptions "/MD"
+        optimize "on"
 
 project "MyGLFW"
     location "VIIL/lib/MyGLFW"
     kind "StaticLib"
     language "C"
+    staticruntime "on"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
@@ -58,7 +58,6 @@ project "MyGLFW"
 
     filter "system:windows"
         systemversion "latest"
-        staticruntime "On"
 
         files
         {
@@ -83,6 +82,8 @@ project "ImGui"
     location "VIIL/lib/imgui"
     kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
@@ -114,8 +115,10 @@ project "ImGui"
 
 project "VIIL"
     location "VIIL"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
@@ -149,31 +152,24 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
     }
 
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "Off"
         systemversion "latest"
 
         defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_DLL"}
 
-        postbuildcommands
-        {
-            "{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outDir .. "/VIILTestProject"
-        }
-
     filter "configurations:Debug"
         optimize "Off"
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
 
     filter "configurations:Release"
         defines {"VIIL_BUILD_RLS"}
-        optimize "On"
-        buildoptions "/MD"
+        optimize "on"
 
 project "VIILTestProject"
     location "VIILTestProject"
     kind "ConsoleApp"
     language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
@@ -199,16 +195,12 @@ project "VIILTestProject"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
-        staticruntime "Off"
         systemversion "latest"
 
     filter "configurations:Debug"
         defines {"VIIL_PLATFORM_WINDOWS"}
-        symbols "On"
-        buildoptions "/MDd"
+        symbols "on"
 
     filter "configurations:Release"
         defines {"VIIL_PLATFORM_WINDOWS", "VIIL_BUILD_RLS"}
-        optimize "On"
-        buildoptions "/MDd"
+        optimize "on"

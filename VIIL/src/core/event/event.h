@@ -5,7 +5,7 @@
 namespace VIIL
 {
 
-	enum class VIIL_API EventType : int
+	enum class EventType : int
 	{
 		BadEvent = 0,
 		WindowClosed,
@@ -21,7 +21,7 @@ namespace VIIL
 		MouseScrolled
 	};
 
-	enum VIIL_API EventCategory : unsigned int
+	enum EventCategory : unsigned int
 	{
 		EVTCAT_BadCategory = 0,
 		EVTCAT_Application = BIT(0),
@@ -37,7 +37,7 @@ namespace VIIL
 
 	#define EVENT_CLASS_CATEGORY(cat) virtual int getCategoryFlags() const override { return cat; }
 
-	class VIIL_API Event
+	class Event
 	{
 		friend class EventDispatcher;
 
@@ -58,7 +58,7 @@ namespace VIIL
 		bool handled = false;
 	};
 
-	class VIIL_API EventDispatcher
+	class EventDispatcher
 	{
 	private:
 		Event& event;

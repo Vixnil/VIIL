@@ -4,7 +4,7 @@
 
 namespace VIIL
 {
-	enum VIIL_API VIIL_KeyCode : int
+	enum VIIL_KeyCode : int
 	{
 		UNKNOWN = -1
 		, SPACE, APOSTROPHE, COMMA, MINUS, PERIOD, SLASH, BACK_SLASH, SEMICOLON, EQUAL, LEFT_BRACKET, RIGHT_BRACKET, GRAVE_ACCENT, ESCAPE, ENTER, TAB, BACKSPACE, INSERT
@@ -18,7 +18,7 @@ namespace VIIL
 		, LAST_KEY_CODE_IN_USE
 	};
 
-	enum VIIL_API VIIL_MouseCode : int
+	enum VIIL_MouseCode : int
 	{
 		BTN_UNKNOWN = -1
 		, BTN_1
@@ -40,7 +40,7 @@ namespace VIIL
 		float posX, posY;
 	};
 
-	class VIIL_API InputCache
+	class InputCache
 	{
 		bool keyCache[VIIL_KeyCode::LAST_KEY_CODE_IN_USE];
 		bool mouseButtonCache[VIIL_MouseCode::BTN_LAST_CODE_IN_USE];

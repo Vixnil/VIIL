@@ -6,7 +6,7 @@
 namespace VIIL
 {
 
-	class VIIL_API ImGuiLayer : public VIIL::Layer
+	class ImGuiLayer : public VIIL::Layer
 	{
 
 	public:

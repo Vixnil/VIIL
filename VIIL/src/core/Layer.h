@@ -6,7 +6,7 @@
 namespace VIIL
 {
 
-	class VIIL_API Layer
+	class Layer
 	{
 	protected:
 		std::string name;

@@ -6,7 +6,7 @@ namespace VIIL
 {
 	using LayerVector = std::vector<std::shared_ptr<Layer>>;
 
-	class VIIL_API LayerStack
+	class LayerStack
 	{
 		LayerVector layerList;
 		LayerVector::iterator layerInserter;

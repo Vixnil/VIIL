@@ -1,51 +1,10 @@
 #pragma once
 
 #include "standardUse.h"
-#include "core/Graphics.h"
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
+#include "core/renderer/OpenGL/OpenGLGraphics.h"
 
 namespace VIIL
 {
-    /*
-	* This needs to be on each thread GLFW will be on as GLFW will call the callback on the same thread only
-	* NOTE: Error callback stays set after library has been terminated as well!?!?!??
-	*/
-	static void glfw_error_callback(int error, const char* description)
-	{
-		VL_ENGINE_ERROR(("GLFW: {0}: {1}", error, description));
-	}
-
-	class WindowsGraphics : public Graphics
-	{
-		
-	public:
-		WindowsGraphics()
-		{
-		}
-
-		void initialize()
-		{
-			glfwSetErrorCallback(glfw_error_callback);
-			isInit = glfwInit();
-
-			VL_ENGINE_TRACE("Initialized windows graphics");
-		}
-
-		void prepareDelete()
-		{
-			glfwTerminate();
-			VL_ENGINE_TRACE("Destroyed windows graphics");
-		}
-	};
-
-	std::unique_ptr<Graphics, GraphicsDeleter> initializeGraphics()
-	{
-		std::unique_ptr<WindowsGraphics, GraphicsDeleter> gphs = std::unique_ptr<WindowsGraphics, GraphicsDeleter>(new WindowsGraphics());
-		gphs->initialize();
-		return gphs;
-	}
-
 	VIIL_MouseCode glfwToViilMouseButtonCode(int& glfwMouseButtonCode)
 	{
 		VIIL_MouseCode code;
@@ -534,6 +493,55 @@ namespace VIIL
 		winData.width = newWidth;
 		winData.height = newHeight;
 		winData.callBackFn(event);
+	}
+
+	void OpenGLGraphics::createWindow(unsigned int& width, unsigned int& height, std::string titleString, void* userData)
+	{
+		windowHandle = glfwCreateWindow(width, height, titleString.c_str(), NULL, NULL);
+
+		glfwSetWindowSizeCallback(windowHandle, windowResizeCallback);
+		glfwSetWindowCloseCallback(windowHandle, windowCloseCallback);
+		glfwSetKeyCallback(windowHandle, keyCallback);
+		glfwSetMouseButtonCallback(windowHandle, mouseButtonCallback);
+		glfwSetScrollCallback(windowHandle, mouseScrollCallback);
+		glfwSetCursorPosCallback(windowHandle, mouseCursorPositionCallback);
+
+		glfwMakeContextCurrent(windowHandle);
+		glfwSetWindowUserPointer(windowHandle, userData);
+		glfwSwapInterval(1);
+
+		gladLoadGL(glfwGetProcAddress);
+
+		VL_ENGINE_INFO("OpenGL Graphics: {0}", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+		VL_ENGINE_INFO("                 {0}", glGetString(GL_RENDERER));
+		VL_ENGINE_INFO("                 {0}", glGetString(GL_VERSION));
+
+	}
+
+	void OpenGLGraphics::swapBuffers()
+	{
+		glfwPollEvents();
+		glfwSwapBuffers(windowHandle);
+	}
+
+	void OpenGLGraphics::initialize()
+	{
+		glfwSetErrorCallback(glfw_error_callback);
+		isInit = glfwInit();
+
+		VL_ENGINE_TRACE("Initialized openGL graphics");
+	}
+
+	void OpenGLGraphics::destoryWindow()
+	{
+		glfwDestroyWindow(windowHandle);
+	}
+
+	void OpenGLGraphics::prepareDelete()
+	{
+		destoryWindow();
+		glfwTerminate();
+		VL_ENGINE_TRACE("Destroyed openGL graphics");
 	}
 
 }

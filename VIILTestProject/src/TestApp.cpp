@@ -22,14 +22,13 @@ public:
 
 class TestApp : public VIIL::Application
 {
-
 public:
 
 	TestApp(VIIL::Window::WindowData windDef):
 		Application(VIIL::LEVEL::LV_TRACE, VIIL::LogConfig("TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE), windDef)
 	{
 		pushLayer(std::shared_ptr<TestLayer>(new TestLayer()));
-	//	pushOverlay(std::shared_ptr<VIIL::ImGuiLayer>(new VIIL::ImGuiLayer()));
+
 	}
 
 };
@@ -40,7 +39,7 @@ std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplica
 	
 	windDef.title = "MyTestApplication";
 	windDef.height = 640;
-	windDef.width = 480;
+	windDef.width = 1280;
 
 	return std::unique_ptr<TestApp, VIIL::ApplicationDeleter>(new TestApp(windDef));
 }

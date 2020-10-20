@@ -154,7 +154,6 @@ namespace VIIL
 				return returnable;
 			}
 		}
-
 	};
 
 }

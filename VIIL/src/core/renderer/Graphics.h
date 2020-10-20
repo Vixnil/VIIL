@@ -1,6 +1,7 @@
 #pragma once
 
 #include "standardUse.h"
+#include "core/input/inputValues.h"
 
 struct GraphicsDeleter;
 
@@ -12,7 +13,10 @@ namespace VIIL
 		bool isInit;
 	public:
 
-		virtual void prepareDelete() {};
+		virtual void prepareDelete() = 0;
+		virtual void createWindow(unsigned int& width, unsigned int& height, std::string titleString, void* userData) = 0;
+		virtual void swapBuffers() = 0;
+
 		inline bool getIsInit() { return isInit; }
 	}; 
 

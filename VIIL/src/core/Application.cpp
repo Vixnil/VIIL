@@ -1,7 +1,12 @@
 #include "standardUse.h"
 #include "Application.h"
-#include "Window.h"
-#include "input/inputValues.h"
+
+//temp includes
+#include "core/renderer/OpenGL/OpenGLInclude.h"
+#include "core/renderer/IndexBuffer.h"
+#include "core/renderer/VertexBuffer.h"
+#include "core/renderer/VertexArray.h"
+#include "core/renderer/Shader.h"
 
 namespace VIIL
 {
@@ -17,7 +22,6 @@ namespace VIIL
 		VIIL::Logger::init(engineConfig, this->appLogConfig);
 
 		initialWindowDef = windDef;
-		appGraphics = initializeGraphics();
 		appWindow = createWindow(initialWindowDef);
 		applicationInstance = this;
 
@@ -47,20 +51,64 @@ namespace VIIL
 
 		doStart();
 
+		//below is temp code
+		unsigned int indices[3] = { 0, 1, 2 };
+		float vertices[3 * 3] =
+		{
+			-.5f, -.5f, .0f,
+			 .5f, -.5f, .0f,
+			 .0f,  .5f, .0f
+		};
+
+		std::string vertexSource = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 myPosition;	
+
+			out vec3 outMyPosition;
+
+			void main()
+			{
+				outMyPosition = (myPosition * .5) + .5;
+				gl_Position = vec4(myPosition, 1.0);
+			}
+		)";
+
+		std::string fragmentSource = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 colour;	
+
+			in vec3 outMyPosition;
+
+			void main()
+			{
+				colour = vec4(outMyPosition, 1.0);
+			}
+		)";
+
+		auto myShader = Shader::Create(vertexSource, fragmentSource);
+		auto vArray = VertexArray::Create(3, 3 * sizeof(float));
+		auto vBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+		auto iBuffer = IndexBuffer::Create(indices, sizeof(indices));
+
+		myShader.get()->Bind();
+
+		glVertexAttribPointer(0, iBuffer.get()->count(), GL_FLOAT, GL_FALSE, iBuffer.get()->count() * sizeof(float), nullptr);
+
+		//not temp
 		while (appIsRunning)
 		{
+			//temp
+			glDrawElements(GL_TRIANGLES, iBuffer.get()->count(), GL_UNSIGNED_INT, nullptr);
 
+			//not temp
 			for (layerPtnr layer : layerStack)
 			{
 				layer->onUpdate();
 			}
 
 			MousePosition& pos = InputCache::get().getMousePosition();
-
-			if (pos.posX > 200)
-			{
-				VL_ENGINE_TRACE("Mouse is at x position greater than 200.");
-			}
 
 			appWindow->update();
 		}
@@ -70,7 +118,7 @@ namespace VIIL
 
 	void Application::OnEvent(Event& event)
 	{
-		VL_ENGINE_TRACE("Event occured: {0}", event.ToString());
+	//	VL_ENGINE_TRACE("Event occured: {0}", event.ToString());
 
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));

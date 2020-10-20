@@ -1,13 +1,13 @@
 #pragma once
 
 #include "standardUse.h"
+#include "renderer/Graphics.h"
 #include "core/event/app.h"
 #include "core/event/key.h"
 #include "core/event/mouse.h"
 
 namespace VIIL
 {
-
 	class Window
 	{
 	public:
@@ -16,7 +16,7 @@ namespace VIIL
 		struct WindowData
 		{
 			std::string title;
-			int width, height;
+			unsigned int width, height;
 			bool isFullScreen;
 
 			EventCallbackFn callBackFn;
@@ -24,6 +24,7 @@ namespace VIIL
 
 	protected:
 		WindowData wData;
+		std::unique_ptr<Graphics, GraphicsDeleter> appGraphics;
 		bool initialized;
 
 	public:

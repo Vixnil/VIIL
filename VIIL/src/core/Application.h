@@ -3,7 +3,7 @@
 #include "standardUse.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "Graphics.h"
+#include "core/renderer/Graphics.h"
 #include "core/input/inputValues.h"
 
 namespace VIIL
@@ -12,7 +12,6 @@ namespace VIIL
 	{
 		//Class variable used to stop application running in the run method
 		bool appIsRunning;
-		std::unique_ptr<Graphics, GraphicsDeleter> appGraphics;
 		std::unique_ptr<Window> appWindow;
 		VIIL::Window::WindowData initialWindowDef;
 		VIIL::LayerStack layerStack;
@@ -41,6 +40,8 @@ namespace VIIL
 
 	private:
 		bool windowCloseHandler(WindowClose& event);
+
+		unsigned int vertexArray, vertexBuffer, indexBuffer;
 	};
 
 	struct ApplicationDeleter

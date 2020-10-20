@@ -2,13 +2,11 @@
 
 #include "standardUse.h"
 #include "core/Window.h"
-#include "core/platform/windows/WindowsGraphics.h"
 
 namespace VIIL
 {
 	class WindowsWdw : public Window
 	{
-		GLFWwindow* windowHndl;
 	public:
 		WindowsWdw(const WindowData& winData);
 		virtual ~WindowsWdw();
@@ -17,8 +15,12 @@ namespace VIIL
 		void WindowsWdw::update();
 
 		inline void setEventCallback(const EventCallbackFn& callback) override { wData.callBackFn = callback; }
-
 	};
+
+	std::unique_ptr<Window> createWindow(const Window::WindowData& winData)
+	{
+		return std::make_unique<WindowsWdw>(winData);
+	}
 }
 
 

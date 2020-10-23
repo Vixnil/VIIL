@@ -1,15 +1,16 @@
 #include "standardUse.h"
 #include "Shader.h"
-#include "OpenGL/Shaders/OpenGLShader.h"
+#include "RendererLibrary.h"
+#include "core/renderer/OpenGL/OpenGLShader.h"
 
 namespace VIIL
 {
 
 	std::unique_ptr<Shader> Shader::Create(const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
-		switch (Renderer::getType())
+		switch (RendererLibrary::getType())
 		{
-		case RendererType::OpenGL:
+		case RendererLibrary::Type::OpenGL:
 			return std::unique_ptr<Shader>(new OpenGLShader(vertexSrc, fragmentSrc));
 			break;
 		default:

@@ -1,6 +1,5 @@
 #pragma once
 #include "standardUse.h"
-#include "Renderer.h"
 
 namespace VIIL
 {

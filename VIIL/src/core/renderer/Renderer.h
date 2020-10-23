@@ -1,21 +1,28 @@
 #pragma once
 #include "standardUse.h"
+#include "RendererAction.h"
 
 namespace VIIL
 {
 
-	enum class RendererType
-	{
-		None = 0,
-		OpenGL
-	};
-
 	class Renderer
 	{
-		static RendererType type;
+		static RendererLibrary::Type type;
 	public:
 
-		inline static RendererType getType() { return type; }
+		static void startScence() 
+		{}
+
+		static void endScence() 
+		{}
+
+		static void submit(const std::shared_ptr<VertexArray>& vertexArray) 
+		{
+			vertexArray->bind();
+			RendererAction::draw(vertexArray);
+		}
+
+		inline static RendererLibrary::Type getType() { return type; }
 	};
 
 }

@@ -1,24 +1,6 @@
 #include <VIIL.h>
-#include <memory>
-
-class TestLayer : public VIIL::Layer
-{
-public:
-	TestLayer() :
-		Layer("TestLayer")
-	{
-		VL_APP_TRACE("Constructed TestLayer");
-	}
-
-	void onUpdate() override
-	{
-	}
-
-	void onEvent(VIIL::Event& event) override
-	{
-	}
-
-};
+#include "layers/BackgroundLayer.h"
+#include "layers/TestLayer.h"
 
 class TestApp : public VIIL::Application
 {
@@ -27,8 +9,8 @@ public:
 	TestApp(VIIL::Window::WindowData windDef):
 		Application(VIIL::LEVEL::LV_TRACE, VIIL::LogConfig("TAPP", VIIL::Logger::defaultLogPattern, VIIL::LEVEL::LV_TRACE), windDef)
 	{
-		pushLayer(std::shared_ptr<TestLayer>(new TestLayer()));
-
+		pushLayer(std::shared_ptr<BackgroundLayer>(new BackgroundLayer()));
+		pushOverlay(std::shared_ptr<TestLayer>(new TestLayer()));
 	}
 
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "standardUse.h"
-#include "Renderer.h"
 
 namespace VIIL
 {
@@ -19,7 +18,7 @@ namespace VIIL
 
 		virtual uint32_t count() const = 0;
 
-		static std::unique_ptr<IndexBuffer> Create(uint32_t* indicies, uint32_t size);
+		static std::shared_ptr<IndexBuffer> Create(uint32_t* indicies, uint32_t size);
 	};
 
 }

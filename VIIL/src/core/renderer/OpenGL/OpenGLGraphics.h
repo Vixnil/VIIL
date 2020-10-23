@@ -2,7 +2,7 @@
 
 #include "standardUse.h"
 #include "core/Window.h"
-#include "core/renderer/Graphics.h"
+#include "core/renderer/interface/Graphics.h"
 
 #include "OpenGLInclude.h"
 

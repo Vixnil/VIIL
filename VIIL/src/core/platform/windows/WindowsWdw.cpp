@@ -29,6 +29,7 @@ namespace VIIL
 
 	WindowsWdw::~WindowsWdw()
 	{
+		//TODO: Not yet being called, need to fix.
 		VL_ENGINE_TRACE("Destroyed Windows window");
 	}
 

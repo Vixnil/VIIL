@@ -1,7 +1,7 @@
 #pragma once
 
 #include "standardUse.h"
-#include "core/renderer/IndexBuffer.h"
+#include "core/renderer/interface/IndexBuffer.h"
 
 namespace VIIL
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "standardUse.h"
-#include "renderer/Graphics.h"
+#include "renderer/interface/Graphics.h"
 #include "core/event/app.h"
 #include "core/event/key.h"
 #include "core/event/mouse.h"

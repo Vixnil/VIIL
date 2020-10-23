@@ -3,7 +3,7 @@
 #include "standardUse.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "core/renderer/Graphics.h"
+#include "core/renderer/interface/Graphics.h"
 #include "core/input/inputValues.h"
 
 namespace VIIL

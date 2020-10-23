@@ -1,7 +1,8 @@
 #include "standardUse.h"
 #include "Renderer.h"
+#include "interface/RendererLibrary.h"
 
 namespace VIIL
 {
-	RendererType Renderer::type = RendererType::OpenGL;
+	RendererLibrary::Type Renderer::type = RendererLibrary::Type::OpenGL;
 }

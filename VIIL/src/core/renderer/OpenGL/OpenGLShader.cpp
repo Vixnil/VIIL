@@ -2,6 +2,8 @@
 #include "OpenGLShader.h"
 #include "core/renderer/OpenGL/OpenGLInclude.h"
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace VIIL
 {
 
@@ -101,6 +103,18 @@ namespace VIIL
 	{
 		glDeleteProgram(shaderId);
 		VL_ENGINE_TRACE("OpenGL Shader destoyed.");
+	}
+
+	void OpenGLShader::setUniformMatrix4(glm::mat4& vp, const std::string& uniformName)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(vp));
+		}
+		Unbind();
 	}
 
 	void OpenGLShader::Bind() const

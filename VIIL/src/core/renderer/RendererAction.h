@@ -2,6 +2,7 @@
 #include "standardUse.h"
 #include "interface/RendererLibrary.h"
 #include "interface/Shader.h"
+#include "Scene.h"
 
 namespace VIIL
 {

@@ -6,12 +6,12 @@
 namespace VIIL
 {
 
-	std::unique_ptr<Shader> Shader::Create(const std::string& vertexSrc, const std::string& fragmentSrc)
+	std::shared_ptr<Shader> Shader::Create(const std::string& vertexSrc, const std::string& fragmentSrc)
 	{
 		switch (RendererLibrary::getType())
 		{
 		case RendererLibrary::Type::OpenGL:
-			return std::unique_ptr<Shader>(new OpenGLShader(vertexSrc, fragmentSrc));
+			return std::shared_ptr<Shader>(new OpenGLShader(vertexSrc, fragmentSrc));
 			break;
 		default:
 			VL_ENGINE_FATAL("Unimplemented renderer type selected. Shader creation failed.");

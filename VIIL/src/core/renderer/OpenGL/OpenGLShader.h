@@ -14,6 +14,7 @@ namespace VIIL
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual void setUniformMatrix4(glm::mat4& vp, const std::string& uniformName) override;
 	};
 
 }

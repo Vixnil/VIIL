@@ -1,7 +1,7 @@
 #pragma once
 
 #include "standardUse.h"
-#include "core/Window.h"
+#include "core/platform/interface/Window.h"
 
 namespace VIIL
 {

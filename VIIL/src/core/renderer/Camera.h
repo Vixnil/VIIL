@@ -40,16 +40,17 @@ namespace VIIL
 		virtual glm::mat4 getProjectionMatrix() const = 0;
 
 		virtual glm::vec3& getLocation() { return location; }
+		virtual glm::vec3& getRotation() { return rotation; }
 
 		virtual ~Camera()
 		{};
 	};
 
-	class Camera2D : public Camera
+	class CameraOrthographic : public Camera
 	{
 	public:
-		Camera2D();
-		Camera2D(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov);
+		CameraOrthographic();
+		CameraOrthographic(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov);
 
 		virtual void setLocation(glm::vec3 loc);
 		virtual void setRotation(glm::vec3 rot);
@@ -59,7 +60,7 @@ namespace VIIL
 		virtual glm::mat4 getViewMatrix() const;
 		virtual glm::mat4 getProjectionMatrix() const;
 
-		virtual ~Camera2D();
+		virtual ~CameraOrthographic();
 	};
 
 }

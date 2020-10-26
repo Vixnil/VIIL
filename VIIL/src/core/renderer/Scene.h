@@ -26,9 +26,10 @@ namespace VIIL
 		{
 		}
 
-		void setObjectToScene(std::shared_ptr<Shader> shader, std::shared_ptr<VertexArray> vArray)
+		void setObjectToScene(std::shared_ptr<Shader> shader, std::shared_ptr<VertexArray> vArray, glm::mat4& objectTransform = glm::mat4(1.0f))
 		{ 
 			shader->setUniformMatrix4(viewProjection, "vpMatrix");
+			shader->setUniformMatrix4(objectTransform, "objTransformMatrix");
 			toRenderList.push_back({shader, vArray}); 
 		}
 

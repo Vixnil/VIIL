@@ -1,8 +1,6 @@
 #include "standardUse.h"
 #include "Application.h"
-
-//temp includes
-#include "renderer/Renderer.h"
+#include "platform/Platform.h"
 
 namespace VIIL
 {
@@ -43,15 +41,20 @@ namespace VIIL
 
 	void Application::run()
 	{
+		float lastFrameTime = 0;
 		VL_ENGINE_TRACE("Starting application");
 
 		doStart();
 
 		while (appIsRunning)
 		{
+			float currTime = Platform::get()->getClock()->getTimeInSeconds();
+			float timeStep = currTime - lastFrameTime;
+			lastFrameTime = currTime;
+
 			for (layerPtnr layer : layerStack)
 			{
-				layer->onUpdate();
+				layer->onUpdate(timeStep);
 			}
 
 			MousePosition& pos = InputCache::get().getMousePosition();

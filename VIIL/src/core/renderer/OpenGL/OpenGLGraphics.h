@@ -1,7 +1,7 @@
 #pragma once
 
 #include "standardUse.h"
-#include "core/Window.h"
+#include "core/platform/interface/Window.h"
 #include "core/renderer/interface/Graphics.h"
 
 #include "OpenGLInclude.h"
@@ -25,6 +25,7 @@ namespace VIIL
 
 		virtual void createWindow(unsigned int& width, unsigned int& height, std::string titleString, void* userData) override;
 		virtual void swapBuffers() override;
+		virtual void isVsync(bool isVSyncOn) override;
 
 		void tempTesting()
 		{

@@ -131,7 +131,9 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
 	{"%{prj.name}/src/**.h"
 	, "%{prj.name}/src/**.cpp"
 	, "%{prj.name}/lib/glm/glm/**.hpp"
-	, "%{prj.name}/lib/glm/glm/**.inl"}
+	, "%{prj.name}/lib/glm/glm/**.inl"
+	, "%{prj.name}/lib/stb/**.h"
+	}
 
     includedirs {"%{prj.name}/src"
                  ,"%{prj.name}/lib/spdlog/include"
@@ -139,6 +141,7 @@ ignoredefaultlibraries {"NODEFAULTLIB"}
                  ,"%{prj.name}/lib/glad/include"
                  ,"%{prj.name}/lib/imgui"
 				 ,"%{prj.name}/lib/glm"
+				 ,"%{prj.name}/lib/stb"
                 }
 
     libdirs {"%{prj.name}/lib/**"}
@@ -174,8 +177,7 @@ project "VIILTestProject"
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
     files {"%{prj.name}/src/**.h", "%{prj.name}/src/**.cpp"
-	, "VIIL/lib/glm/glm/**.hpp"
-	, "VIIL/lib/glm/glm/**.inl"}
+}
 
     includedirs
     {

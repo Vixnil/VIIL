@@ -23,7 +23,7 @@ namespace VIIL
 
 		void onAttached() override;
 		void onEvent(Event& event) override;
-		void onUpdate() override;
+		void onUpdate(float deltaTime) override;
 
 	};
 

@@ -1,9 +1,7 @@
 #pragma once
-
 #include "standardUse.h"
 #include "LayerStack.h"
-#include "Window.h"
-#include "core/renderer/interface/Graphics.h"
+#include "platform/interface/Window.h"
 #include "core/input/inputValues.h"
 
 namespace VIIL

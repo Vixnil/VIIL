@@ -9,20 +9,20 @@ namespace VIIL
 	static const glm::vec3 rightVector = { 1.0f, .0f, .0f };
 	static const glm::vec3 fowardVector = { .0f, .0f, 1.0f };
 
-	Camera2D::Camera2D() :
+	CameraOrthographic::CameraOrthographic() :
 		Camera()
 	{}
 
-	Camera2D::Camera2D(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov):
+	CameraOrthographic::CameraOrthographic(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov):
 		Camera(bounds, loc, rot, asptRt, fov)
 	{}
 
-	Camera2D::~Camera2D()
+	CameraOrthographic::~CameraOrthographic()
 	{
 
 	}
 
-	glm::mat4 Camera2D::getViewMatrix() const
+	glm::mat4 CameraOrthographic::getViewMatrix() const
 	{
 		glm::mat4 t = glm::translate(glm::mat4(1.0f), location);
 		glm::mat4 r = glm::rotate(glm::mat4(1.0f), rotation.z, fowardVector);
@@ -32,27 +32,27 @@ namespace VIIL
 		return view;
 	}
 
-	glm::mat4 Camera2D::getProjectionMatrix() const
+	glm::mat4 CameraOrthographic::getProjectionMatrix() const
 	{
 		return glm::ortho(boundary.left, boundary.right, boundary.bottom, boundary.top, boundary.nearView, boundary.farView);
 	}
 
-	void Camera2D::setLocation(glm::vec3 loc)
+	void CameraOrthographic::setLocation(glm::vec3 loc)
 	{
 		location = loc;
 	}
 
-	void Camera2D::setRotation(glm::vec3 rot)
+	void CameraOrthographic::setRotation(glm::vec3 rot)
 	{
 		rotation = rot;
 	}
 
-	void Camera2D::setAspectRatio(float asptRt)
+	void CameraOrthographic::setAspectRatio(float asptRt)
 	{
 		aspectRatio = asptRt;
 	}
 
-	void Camera2D::setFieldOfView(float fov)
+	void CameraOrthographic::setFieldOfView(float fov)
 	{
 		fieldOfView = fov;
 	}

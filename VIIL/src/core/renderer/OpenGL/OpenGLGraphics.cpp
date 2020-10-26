@@ -518,6 +518,11 @@ namespace VIIL
 
 	}
 
+	void OpenGLGraphics::isVsync(bool isVSyncOn)
+	{
+		glfwSwapInterval(isVSyncOn);
+	}
+
 	void OpenGLGraphics::swapBuffers()
 	{
 		glfwPollEvents();

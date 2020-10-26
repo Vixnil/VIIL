@@ -13,3 +13,7 @@
 [submodule "VIIL/lib/glm"]
 	path = VIIL/lib/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "VIIL/lib/stb"]
+	path = VIIL/lib/stb
+	url = https://github.com/nothings/stb.git
+	branch = master

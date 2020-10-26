@@ -16,6 +16,7 @@ namespace VIIL
 		virtual void prepareDelete() = 0;
 		virtual void createWindow(unsigned int& width, unsigned int& height, std::string titleString, void* userData) = 0;
 		virtual void swapBuffers() = 0;
+		virtual void isVsync(bool isVSyncOn) = 0;
 
 		inline bool getIsInit() { return isInit; }
 	}; 

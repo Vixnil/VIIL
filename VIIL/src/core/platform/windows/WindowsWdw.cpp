@@ -8,7 +8,6 @@ namespace VIIL
 	{
 		appGraphics = initializeGraphics();
 		initializeWindow(winData);
-
 	}
 
 	/*
@@ -22,7 +21,8 @@ namespace VIIL
 		wData.title = winData.title;
 		wData.isFullScreen = winData.isFullScreen;
 
-		appGraphics.get()->createWindow(wData.width, wData.height, wData.title, &wData);
+		appGraphics->createWindow(wData.width, wData.height, wData.title, &wData);
+		appGraphics->isVsync(true);
 
 		initialized = true;
 	}
@@ -35,7 +35,7 @@ namespace VIIL
 
 	void WindowsWdw::update()
 	{
-		appGraphics.get()->swapBuffers();
+		appGraphics->swapBuffers();
 	}
 
 }

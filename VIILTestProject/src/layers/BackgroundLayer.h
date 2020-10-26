@@ -11,7 +11,7 @@ public:
 		VL_APP_TRACE("Constructed Background layer");
 	}
 
-	void onUpdate() override
+	void onUpdate(float deltaTime) override
 	{
 		VIIL::RendererAction::clear();
 	}

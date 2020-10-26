@@ -1,24 +1,21 @@
 #pragma once
 #include <VIIL.h>
-#include <chrono>
-#include <ctime>
+#include <glm/gtc/matrix_transform.hpp>
 
 class TestLayer : public VIIL::Layer
 {
-	VIIL::Camera2D myCam;
+	VIIL::CameraOrthographic myCam;
 	std::shared_ptr<VIIL::Shader> myShader;
 	std::shared_ptr<VIIL::VertexArray> vArray;
-	std::chrono::steady_clock::duration timerStart;
-	int numFramesSinceStart = -1;
-	int numFramesLastSecond = 0;
+	glm::vec3 trianglePos;
 
 public:
 	TestLayer() :
-		Layer("TestLayer")
+		Layer("TestLayer"), trianglePos(0.0f)
 	{
 		VL_APP_TRACE("Constructed TestLayer");
 
-		myCam = VIIL::Camera2D({ -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1, .45f);
+		myCam = VIIL::CameraOrthographic({ -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1, .45f);
 
 		unsigned int indices[3] = { 0, 1, 2};//	2, 3, 0 };
 		float vertices[3 * 3] =
@@ -34,10 +31,11 @@ public:
 			layout(location = 0) in vec3 myPosition;	
 
 			uniform mat4 vpMatrix;
+			uniform mat4 objTransformMatrix;
 
 			void main()
 			{
-				gl_Position = (vpMatrix * vec4(myPosition, 1));
+				gl_Position = ((vpMatrix * objTransformMatrix) * vec4(myPosition, 1));
 			}
 		)";
 
@@ -70,54 +68,74 @@ public:
 		VL_APP_TRACE("Destroyed test layer");
 	}
 
-	void onUpdate() override
+	void onUpdate(float deltaTime) override
 	{
 		VIIL::InputCache& input = VIIL::InputCache::get();
-		auto currLoc = myCam.getLocation();
+		auto modLoc = myCam.getLocation();
 
-		auto timerEnd = std::chrono::high_resolution_clock::now().time_since_epoch();
-		double miliSeconds = (((timerEnd - timerStart)) / CLOCKS_PER_SEC).count()/1000;
-
-		if (miliSeconds > 1000)
-		{
-			numFramesLastSecond = numFramesSinceStart;
-			timerStart = std::chrono::high_resolution_clock::now().time_since_epoch();
-			numFramesSinceStart = 0;
-		}
+		float camMovementAmount = deltaTime * 1;
 
 		if (input.isKeyPressed(VIIL::W))
 		{
-			myCam.setLocation({ currLoc.x, currLoc.y - .01, currLoc.z });
+			modLoc = { modLoc.x, modLoc.y + camMovementAmount, modLoc.z };
 		}
 		else if (input.isKeyPressed(VIIL::S))
 		{
-			myCam.setLocation({ currLoc.x, currLoc.y + .01, currLoc.z });
+			modLoc = { modLoc.x, modLoc.y - camMovementAmount, modLoc.z };
 		}
-		else if (input.isKeyPressed(VIIL::A))
+
+		if (input.isKeyPressed(VIIL::A))
 		{
-			myCam.setLocation({ currLoc.x + .01, currLoc.y, currLoc.z });
+			modLoc = { modLoc.x - camMovementAmount, modLoc.y, modLoc.z };
 		}
 		else if (input.isKeyPressed(VIIL::D))
 		{
-			myCam.setLocation({ currLoc.x - .01, currLoc.y, currLoc.z });
+			modLoc = { modLoc.x + camMovementAmount, modLoc.y, modLoc.z };
 		}
 
-		if (input.isKeyPressed(VIIL::F1))
+
+		if (input.isKeyPressed(VIIL::UP_ARROW))
 		{
-			VL_APP_TRACE("Number of updates ran last second: {0}", numFramesLastSecond);
+			trianglePos = { trianglePos.x, trianglePos.y + camMovementAmount, trianglePos.z };
 		}
+		else if (input.isKeyPressed(VIIL::DOWN_ARROW))
+		{
+			trianglePos = { trianglePos.x, trianglePos.y - camMovementAmount, trianglePos.z };
+		}
+
+		if (input.isKeyPressed(VIIL::RIGHT_ARROW))
+		{
+			trianglePos = { trianglePos.x + camMovementAmount, trianglePos.y, trianglePos.z };
+		}
+		else if (input.isKeyPressed(VIIL::LEFT_ARROW))
+		{
+			trianglePos = { trianglePos.x - camMovementAmount, trianglePos.y, trianglePos.z };
+		}
+
+		if (input.isKeyPressed(VIIL::E))
+		{
+			myCam.setRotation(myCam.getRotation() - camMovementAmount);
+		}
+		else if (input.isKeyPressed(VIIL::Q))
+		{
+			myCam.setRotation(myCam.getRotation() + camMovementAmount);
+		}
+
+		myCam.setLocation(modLoc);
 
 		VIIL::Scene myScene = VIIL::Scene(myCam);
+		
+		glm::mat4 triangleTransform = glm::translate(glm::mat4(1.0f), trianglePos);
+		glm::mat4 triangleScale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
 
-		myScene.setObjectToScene(myShader, vArray);
+		myScene.setObjectToScene(myShader, vArray, triangleTransform * triangleScale);
 
 		VIIL::Renderer::drawScene(myScene);
-		numFramesSinceStart++;
 	}
 
 	void onEvent(VIIL::Event& event) override
 	{
-
+		VIIL::EventDispatcher dispatcher(event);
 	}
 
 };

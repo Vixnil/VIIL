@@ -1,6 +1,6 @@
 #pragma once
-#include "standardUse.h"
-#include "Layer.h"
+#include "core/standardUse.h"
+#include "core/Layer.h"
 
 namespace VIIL
 {

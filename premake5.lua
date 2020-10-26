@@ -122,8 +122,8 @@ project "VIIL"
     targetdir ("bin/" .. outDir .. "/%{prj.name}")
     objdir ("bin_inter/" .. outDir .. "/%{prj.name}")
 
-    pchheader "standardUse.h"
-    pchsource "VIIL/src/standardUse.cpp"
+    pchheader "core/standardUse.h"
+    pchsource "VIIL/src/core/standardUse.cpp"
 
 ignoredefaultlibraries {"NODEFAULTLIB"}
 

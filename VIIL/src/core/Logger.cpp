@@ -1,5 +1,5 @@
-#include "standardUse.h"
-#include "Logger.h"
+#include "core/standardUse.h"
+#include "core/Logger.h"
 
 namespace VIIL
 {

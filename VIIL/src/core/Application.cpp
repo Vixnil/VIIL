@@ -1,5 +1,5 @@
-#include "standardUse.h"
-#include "Application.h"
+#include "core/standardUse.h"
+#include "core/Application.h"
 #include "platform/Platform.h"
 
 namespace VIIL

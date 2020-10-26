@@ -1,5 +1,5 @@
-#include "standardUse.h"
-#include "LayerStack.h"
+#include "core/standardUse.h"
+#include "core/LayerStack.h"
 
 namespace VIIL
 {

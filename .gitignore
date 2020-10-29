@@ -36,3 +36,5 @@
 *bin_inter/*
 *.vcxproj*
 
+*.png
+

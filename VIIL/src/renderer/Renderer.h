@@ -39,7 +39,6 @@ namespace VIIL
 		static void drawScene(Scene& scene)
 		{
 			std::vector<SceneObjects> sceneVec = scene.getObjectsInScene();
-
 			//sort so all shaders are paired together, to bind once then do all vArray drawing before moving to next shader
 			for (SceneObjects obj : sceneVec)
 			{

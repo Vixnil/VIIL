@@ -7,6 +7,7 @@ class TestLayer : public VIIL::Layer
 	VIIL::CameraOrthographic myCam;
 	std::shared_ptr<VIIL::Shader> myShader;
 	std::shared_ptr<VIIL::VertexArray> vArray;
+	std::shared_ptr<VIIL::Texture2D> ring;
 	glm::vec3 trianglePos;
 
 public:
@@ -19,25 +20,29 @@ public:
 			{ -100.f, 100.5f, -100.0f, 100.f, -100.0f, 100.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, .45f, 1);
 
 		unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
-		float vertices[3 * 4] =
+		float vertices[5 * 4] =
 		{
-			-50.0f, -50.0f, .0f, 
-			 50.0f, -50.0f, .0f, 
-			 50.0f,  50.0f, .0f,
-			-50.0f,  50.0f, .0f
+			-50.0f, -50.0f, .0f,  .0f,  .0f,
+			 50.0f, -50.0f, .0f, 1.0f,  .0f,
+			 50.0f,  50.0f, .0f, 1.0f, 1.0f,
+			-50.0f,  50.0f, .0f,  .0f, 1.0f
 		};
 
 		std::string vertexSource = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 myPosition;	
+			layout(location = 1) in vec2 inTextureCoords;
 
 			uniform float aspectRatio;
 			uniform mat4 vpMatrix;
 			uniform mat4 objTransformMatrix;
 
+			out vec2 textureCoords;
+
 			void main()
 			{
+				textureCoords = inTextureCoords;
 				gl_Position = ((vpMatrix * objTransformMatrix) * (vec4(aspectRatio, 1, 1, 1) * vec4(myPosition, 1)));
 			}
 		)";
@@ -47,19 +52,32 @@ public:
 
 			layout(location = 0) out vec4 colour;	
 
+			in vec2 textureCoords;
+			uniform sampler2D image;
+
 			void main()
 			{
-				colour = vec4(.8, .3, .6, 1);
+				
+				colour = texture(image, textureCoords);
 			}
 		)";
-
+		//colour = texture(image, textureCoords);
+		//colour = vec4(textureCoords, 1, 1);
+		ring = VIIL::Texture2D::create("resources/images/rings_3.png");
 		myShader = VIIL::Shader::Create(vertexSource, fragmentSource);
+
+		int slotToBind = 0;
+		ring->bind(slotToBind);
+		//myShader->setUniformFloat2("inTextureCoords", glm::vec2({ 1, 1 }));
+		myShader->setUniformInt("image", slotToBind);
+
 		vArray = VIIL::VertexArray::Create();
 		auto vBuffer = VIIL::VertexBuffer::Create(vertices, sizeof(vertices));
 
 		vBuffer->setLayout(
 			{
 				{ VIIL::ShaderDataType::FLOAT3, "myPosition"},
+				{ VIIL::ShaderDataType::FLOAT2, "inTextureCoords"}
 			});
 
 		vArray->addVertexBuffer(vBuffer);
@@ -155,6 +173,7 @@ public:
 
 		myScene.setObjectToScene(myShader, vArray, triangleTransform * triangleScale);
 
+		//ring->bind(0);
 		VIIL::Renderer::get().drawScene(myScene);
 	}
 

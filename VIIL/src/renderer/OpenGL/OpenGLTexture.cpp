@@ -51,6 +51,6 @@ namespace VIIL
 
 	void OpenGLTexture2D::bind(uint32_t textureSlot) const
 	{
-		glBindTexture(textureSlot, textureId);
+		glBindTextureUnit(textureSlot, textureId);
 	}
 }

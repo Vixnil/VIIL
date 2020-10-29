@@ -16,7 +16,7 @@ namespace VIIL
 		inline void setEventCallback(const EventCallbackFn& callback) override { wData.callBackFn = callback; }
 	};
 
-	std::unique_ptr<Window> createWindow(const Window::WindowData& winData)
+	std::shared_ptr<Window> createWindow(const Window::WindowData& winData)
 	{
 		return std::make_unique<WindowsWdw>(winData);
 	}

@@ -47,5 +47,5 @@ namespace VIIL
 
 	};
 
-	std::unique_ptr<Window> createWindow(const Window::WindowData& winData);
+	std::shared_ptr<Window> createWindow(const Window::WindowData& winData);
 }

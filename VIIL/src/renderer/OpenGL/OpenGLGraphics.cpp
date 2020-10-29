@@ -492,6 +492,7 @@ namespace VIIL
 		winData.width = newWidth;
 		winData.height = newHeight;
 		winData.callBackFn(event);
+		//VL_ENGINE_TRACE("Window resized!");
 	}
 
 	void OpenGLGraphics::createWindow(unsigned int& width, unsigned int& height, std::string titleString, void* userData)
@@ -510,6 +511,9 @@ namespace VIIL
 		glfwSwapInterval(1);
 
 		gladLoadGL(glfwGetProcAddress);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		VL_ENGINE_INFO("OpenGL Graphics: {0}", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
 		VL_ENGINE_INFO("                 {0}", glGetString(GL_RENDERER));

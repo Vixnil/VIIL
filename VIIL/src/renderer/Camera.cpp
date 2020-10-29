@@ -13,6 +13,10 @@ namespace VIIL
 		Camera()
 	{}
 
+	CameraOrthographic::CameraOrthographic(float aspectRt) :
+		Camera(aspectRt)
+	{}
+
 	CameraOrthographic::CameraOrthographic(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov):
 		Camera(bounds, loc, rot, asptRt, fov)
 	{}
@@ -25,7 +29,7 @@ namespace VIIL
 	glm::mat4 CameraOrthographic::getViewMatrix() const
 	{
 		glm::mat4 t = glm::translate(glm::mat4(1.0f), location);
-		glm::mat4 r = glm::rotate(glm::mat4(1.0f), rotation.z, fowardVector);
+		glm::mat4 r = glm::rotate(glm::mat4(1.0f), rotation.x, upVector) * glm::rotate(glm::mat4(1.0f), rotation.y, rightVector) * glm::rotate(glm::mat4(1.0f), rotation.z, fowardVector);
 		glm::mat4 m = t * r;
 		glm::mat4 view = glm::inverse(m);
 
@@ -34,7 +38,13 @@ namespace VIIL
 
 	glm::mat4 CameraOrthographic::getProjectionMatrix() const
 	{
-		return glm::ortho(boundary.left, boundary.right, boundary.bottom, boundary.top, boundary.nearView, boundary.farView);
+		return glm::ortho(boundary.left,// * aspectRatio, 
+			             boundary.right,// * aspectRatio, 
+			            boundary.bottom,// * aspectRatio, 
+			               boundary.top,// * aspectRatio, 
+			          boundary.nearView,// * aspectRatio, 
+			           boundary.farView // * aspectRatio
+						);
 	}
 
 	void CameraOrthographic::setLocation(glm::vec3 loc)

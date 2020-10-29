@@ -20,8 +20,8 @@ std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplica
 	VIIL::Window::WindowData windDef;
 	
 	windDef.title = "MyTestApplication";
-	windDef.height = 640;
-	windDef.width = 1280;
+	windDef.height = 540;
+	windDef.width = 1080;
 
 	return std::unique_ptr<TestApp, VIIL::ApplicationDeleter>(new TestApp(windDef));
 }

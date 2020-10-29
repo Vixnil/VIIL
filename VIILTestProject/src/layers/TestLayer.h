@@ -14,15 +14,17 @@ public:
 		Layer("TestLayer"), trianglePos(0.0f)
 	{
 		VL_APP_TRACE("Constructed TestLayer");
+		float aspectRatio = VIIL::Renderer::get().getCurrentAspectRatio();
+		myCam = VIIL::CameraOrthographic(
+			{ -100.f, 100.5f, -100.0f, 100.f, -100.0f, 100.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, .45f, 1);
 
-		myCam = VIIL::CameraOrthographic({ -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1, .45f);
-
-		unsigned int indices[3] = { 0, 1, 2};//	2, 3, 0 };
-		float vertices[3 * 3] =
+		unsigned int indices[6] = { 0, 1, 2, 2, 3, 0 };
+		float vertices[3 * 4] =
 		{
-			-.5f, -.5f, .0f, 
-			 .5f, -.5f, .0f, 
-			 .0f,  .5f, .0f 
+			-50.0f, -50.0f, .0f, 
+			 50.0f, -50.0f, .0f, 
+			 50.0f,  50.0f, .0f,
+			-50.0f,  50.0f, .0f
 		};
 
 		std::string vertexSource = R"(
@@ -30,12 +32,13 @@ public:
 
 			layout(location = 0) in vec3 myPosition;	
 
+			uniform float aspectRatio;
 			uniform mat4 vpMatrix;
 			uniform mat4 objTransformMatrix;
 
 			void main()
 			{
-				gl_Position = ((vpMatrix * objTransformMatrix) * vec4(myPosition, 1));
+				gl_Position = ((vpMatrix * objTransformMatrix) * (vec4(aspectRatio, 1, 1, 1) * vec4(myPosition, 1)));
 			}
 		)";
 
@@ -72,8 +75,10 @@ public:
 	{
 		VIIL::InputCache& input = VIIL::InputCache::get();
 		auto modLoc = myCam.getLocation();
+		auto modRot = myCam.getRotation();
 
 		float camMovementAmount = deltaTime * 1;
+		float objMovementAmount = deltaTime * 25;
 
 		if (input.isKeyPressed(VIIL::W))
 		{
@@ -96,32 +101,52 @@ public:
 
 		if (input.isKeyPressed(VIIL::UP_ARROW))
 		{
-			trianglePos = { trianglePos.x, trianglePos.y + camMovementAmount, trianglePos.z };
+			trianglePos = { trianglePos.x, trianglePos.y + objMovementAmount, trianglePos.z };
 		}
 		else if (input.isKeyPressed(VIIL::DOWN_ARROW))
 		{
-			trianglePos = { trianglePos.x, trianglePos.y - camMovementAmount, trianglePos.z };
+			trianglePos = { trianglePos.x, trianglePos.y - objMovementAmount, trianglePos.z };
 		}
 
 		if (input.isKeyPressed(VIIL::RIGHT_ARROW))
 		{
-			trianglePos = { trianglePos.x + camMovementAmount, trianglePos.y, trianglePos.z };
+			trianglePos = { trianglePos.x + objMovementAmount, trianglePos.y, trianglePos.z };
 		}
 		else if (input.isKeyPressed(VIIL::LEFT_ARROW))
 		{
-			trianglePos = { trianglePos.x - camMovementAmount, trianglePos.y, trianglePos.z };
+			trianglePos = { trianglePos.x - objMovementAmount, trianglePos.y, trianglePos.z };
 		}
 
 		if (input.isKeyPressed(VIIL::E))
 		{
-			myCam.setRotation(myCam.getRotation() - camMovementAmount);
+			modRot = { modRot.x, modRot.y, modRot.z - camMovementAmount };
 		}
 		else if (input.isKeyPressed(VIIL::Q))
 		{
-			myCam.setRotation(myCam.getRotation() + camMovementAmount);
+			modRot = { modRot.x, modRot.y, modRot.z + camMovementAmount };
+		}
+
+		if (input.isKeyPressed(VIIL::R))
+		{
+			modRot = { modRot.x, modRot.y - camMovementAmount, modRot.z };
+		}
+		else if (input.isKeyPressed(VIIL::F))
+		{
+			modRot = { modRot.x, modRot.y + camMovementAmount, modRot.z };
+		}
+
+		if (input.isKeyPressed(VIIL::T))
+		{
+			modRot = { modRot.x- camMovementAmount, modRot.y , modRot.z };
+		}
+		else if (input.isKeyPressed(VIIL::G))
+		{
+			modRot = { modRot.x + camMovementAmount, modRot.y , modRot.z };
 		}
 
 		myCam.setLocation(modLoc);
+		myCam.setRotation(modRot);
+		myCam.setAspectRatio(VIIL::Renderer::get().getCurrentAspectRatio());
 
 		VIIL::Scene myScene = VIIL::Scene(myCam);
 		
@@ -130,7 +155,7 @@ public:
 
 		myScene.setObjectToScene(myShader, vArray, triangleTransform * triangleScale);
 
-		VIIL::Renderer::drawScene(myScene);
+		VIIL::Renderer::get().drawScene(myScene);
 	}
 
 	void onEvent(VIIL::Event& event) override

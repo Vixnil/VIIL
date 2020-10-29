@@ -9,3 +9,5 @@
 
 #include "core/core.h"
 #include "core/Logger.h"
+
+#include <stb_image.h>

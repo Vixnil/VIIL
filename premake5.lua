@@ -184,6 +184,7 @@ project "VIILTestProject"
         "VIIL/lib/**/include",
         "VIIL/src"
 		,"VIIL/lib/glm"
+		,"VIIL/lib/stb"
     }
 
     libdirs {"VIIL/lib/**"}

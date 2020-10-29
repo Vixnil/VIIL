@@ -1,6 +1,7 @@
 #include "core/standardUse.h"
 #include "core/Application.h"
 #include "platform/Platform.h"
+#include "renderer/Renderer.h"
 
 namespace VIIL
 {
@@ -15,9 +16,10 @@ namespace VIIL
 		VIIL::LogConfig engineConfig("VIIL", VIIL::Logger::defaultLogPattern, this->engineLogLevel);
 		VIIL::Logger::init(engineConfig, this->appLogConfig);
 
-		initialWindowDef = windDef;
-		appWindow = createWindow(initialWindowDef);
+		appWindow = createWindow(windDef);
 		applicationInstance = this;
+
+		Renderer::set(appWindow);
 
 		VL_ENGINE_TRACE("Created application");
 	}
@@ -71,7 +73,7 @@ namespace VIIL
 
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));
-		
+
 		if (!event.isHandled())
 		{
 			for (LayerVector::iterator layerItr = layerStack.end(); layerItr != layerStack.begin();)

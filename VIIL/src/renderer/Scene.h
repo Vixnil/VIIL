@@ -6,7 +6,6 @@
 
 namespace VIIL
 {
-
 	struct SceneObjects
 	{
 		std::shared_ptr<Shader> shader;
@@ -17,19 +16,21 @@ namespace VIIL
 	{
 		std::vector<SceneObjects> toRenderList;
 		glm::mat4 viewProjection;
+		float aspectRatio;
 
 	public:
 		Scene() = delete;
 
 		Scene(Camera& cam):
-			viewProjection(cam.getViewMatrix() * cam.getProjectionMatrix())
+			viewProjection(cam.getViewMatrix() * cam.getProjectionMatrix()), aspectRatio(cam.getAspectRatio())
 		{
 		}
 
 		void setObjectToScene(std::shared_ptr<Shader> shader, std::shared_ptr<VertexArray> vArray, glm::mat4& objectTransform = glm::mat4(1.0f))
 		{ 
-			shader->setUniformMatrix4(viewProjection, "vpMatrix");
-			shader->setUniformMatrix4(objectTransform, "objTransformMatrix");
+			shader->setUniformMatrix4("vpMatrix", viewProjection);
+			shader->setUniformMatrix4("objTransformMatrix", objectTransform);
+			shader->setUniformFloat("aspectRatio", aspectRatio);
 			toRenderList.push_back({shader, vArray}); 
 		}
 

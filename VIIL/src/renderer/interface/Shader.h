@@ -5,7 +5,6 @@
 
 namespace VIIL
 {
-
 	class Shader
 	{
 	public:
@@ -13,7 +12,16 @@ namespace VIIL
 
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
-		virtual void setUniformMatrix4(glm::mat4& vp, const std::string& uniformName) = 0;
+
+		virtual void setUniformInt(const std::string& uniformName, int& vp) = 0;
+
+		virtual void setUniformFloat(const std::string& uniformName, float& vp) = 0;
+		virtual void setUniformFloat2(const std::string& uniformName, glm::vec2& vp) = 0;
+		virtual void setUniformFloat3(const std::string& uniformName, glm::vec3& vp) = 0;
+		virtual void setUniformFloat4(const std::string& uniformName, glm::vec4& vp) = 0;
+
+		virtual void setUniformMatrix3(const std::string& uniformName, glm::mat3& vp) = 0;
+		virtual void setUniformMatrix4(const std::string& uniformName, glm::mat4& vp) = 0;
 
 		static std::shared_ptr<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
 	};

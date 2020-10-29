@@ -1,8 +1,6 @@
 #pragma once
 #include "core/standardUse.h"
 #include "renderer/interface/RendererLibrary.h"
-#include "renderer/interface/Shader.h"
-#include "renderer/Scene.h"
 
 namespace VIIL
 {

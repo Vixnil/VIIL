@@ -105,7 +105,79 @@ namespace VIIL
 		VL_ENGINE_TRACE("OpenGL Shader destoyed.");
 	}
 
-	void OpenGLShader::setUniformMatrix4(glm::mat4& vp, const std::string& uniformName)
+	void OpenGLShader::setUniformInt(const std::string& uniformName, int& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniform1i(loc, vp);
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformFloat(const std::string& uniformName, float& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniform1f(loc, vp);
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformFloat2(const std::string& uniformName, glm::vec2& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniform2f(loc, vp.x, vp.y);
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformFloat3(const std::string& uniformName, glm::vec3& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniform3f(loc, vp.x, vp.y, vp.z);
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformFloat4(const std::string& uniformName, glm::vec4& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniform4f(loc, vp.x, vp.y, vp.z, vp.a);
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformMatrix3(const std::string& uniformName, glm::mat3& vp)
+	{
+		Bind();
+		int loc = glGetUniformLocation(shaderId, uniformName.c_str());
+
+		if (loc != -1)
+		{
+			glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(vp));
+		}
+		Unbind();
+	}
+
+	void OpenGLShader::setUniformMatrix4(const std::string& uniformName, glm::mat4& vp)
 	{
 		Bind();
 		int loc = glGetUniformLocation(shaderId, uniformName.c_str());

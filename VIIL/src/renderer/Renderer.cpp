@@ -5,4 +5,5 @@
 namespace VIIL
 {
 	RendererLibrary::Type Renderer::type = RendererLibrary::Type::OpenGL;
+	Renderer Renderer::theRenderer = 0;
 }

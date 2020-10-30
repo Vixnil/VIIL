@@ -9,6 +9,7 @@ namespace VIIL
 	{
 		uint32_t shaderId;
 	public:
+		OpenGLShader(const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile);
 		OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
 		~OpenGLShader();
 

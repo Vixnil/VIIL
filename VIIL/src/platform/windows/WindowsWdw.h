@@ -18,7 +18,7 @@ namespace VIIL
 
 	std::shared_ptr<Window> createWindow(const Window::WindowData& winData)
 	{
-		return std::make_unique<WindowsWdw>(winData);
+		return std::make_shared<WindowsWdw>(winData);
 	}
 }
 

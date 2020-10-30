@@ -15,6 +15,8 @@
 
 #include "input/inputValues.h"
 
+#include "platform/interface/File.h"
+
 #include "renderer/Renderer.h"
 #include "renderer/Camera.h"
 #include "renderer/Scene.h"

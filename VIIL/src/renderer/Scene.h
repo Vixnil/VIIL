@@ -31,6 +31,14 @@ namespace VIIL
 			shader->setUniformMatrix4("vpMatrix", viewProjection);
 			shader->setUniformMatrix4("objTransformMatrix", objectTransform);
 			shader->setUniformFloat("aspectRatio", aspectRatio);
+
+			std::vector<std::shared_ptr<VertexBuffer>> list = vArray->getVertexBuffers();
+
+			for (std::shared_ptr<VertexBuffer> vBuff : list)
+			{
+				//vBuff->
+			}
+
 			toRenderList.push_back({shader, vArray}); 
 		}
 

@@ -23,7 +23,8 @@ namespace VIIL
 
 		virtual void setUniformMatrix3(const std::string& uniformName, glm::mat3& vp) = 0;
 		virtual void setUniformMatrix4(const std::string& uniformName, glm::mat4& vp) = 0;
-
+		
+		static std::shared_ptr<Shader> Create(const std::shared_ptr<File>& shaderSrc);
 		static std::shared_ptr<Shader> Create(const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile);
 		static std::shared_ptr<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
 	};

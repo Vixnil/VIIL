@@ -1,21 +1,43 @@
 #include "core/standardUse.h"
 #include "platform/windows/WindowsFile.h"
 
-#include <fstream>
-
 namespace VIIL
 {
 	static const int fileReadBufferSize = 2048;
 
-	WindowsFile::WindowsFile(const std::string& newFilePath)
+	WindowsFile::WindowsFile(const std::string& newFilePath):
+		endOfFile(true)
 	{
 		filePath = newFilePath;
+	}
+
+	void WindowsFile::open() const
+	{
+		inStream.open(filePath);
+		endOfFile = false;
+	}
+
+	void WindowsFile::close() const
+	{
+		inStream.close();
+		endOfFile = true;
+	}
+
+	std::string WindowsFile::getLine() const
+	{
+		std::string contents;
+		char buffer[fileReadBufferSize];
+
+		endOfFile = inStream.getline(buffer, fileReadBufferSize).eof();
+		contents.append(buffer);
+		contents.append("\n");
+
+		return contents;
 	}
 
 	std::string WindowsFile::readFileToString() const
 	{
 		std::string contents;
-		std::ifstream inStream;
 		char buffer[fileReadBufferSize];
 
 		inStream.open(filePath);
@@ -25,8 +47,6 @@ namespace VIIL
 			contents.append(buffer);
 			contents.append("\n");
 		}
-
-		inStream.close();
 
 		return contents;
 	}

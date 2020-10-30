@@ -1,21 +1,26 @@
 #include "core/standardUse.h"
 #include "renderer/OpenGL/OpenGLShader.h"
 #include "renderer/OpenGL/OpenGLInclude.h"
+#include "helper/string.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
 namespace VIIL
 {
+	static const std::string SHADER_KEYWORD = "#shader";
+	static const std::string SHADER_VERTEX = "Vertex";
+	static const std::string SHADER_FRAGMENT = "Fragment";
 
 	enum ShaderType : GLenum
 	{
-		vertex = GL_VERTEX_SHADER,
-		fragment = GL_FRAGMENT_SHADER
+		unknownShaderType = 0
+		,vertex = GL_VERTEX_SHADER
+		,fragment = GL_FRAGMENT_SHADER
 	};
 
 	struct ShaderInfo
 	{
-		const std::string source;
+		std::string source;
 		ShaderType type;
 	};
 
@@ -26,10 +31,10 @@ namespace VIIL
 		switch (shaderType)
 		{
 		case GL_VERTEX_SHADER:
-			message = "Vertex";
+			message = SHADER_VERTEX;
 			break;
 		case GL_FRAGMENT_SHADER:
-			message = "Fragment";
+			message = SHADER_FRAGMENT;
 			break;
 		default:
 			message = "UNKNOWN TYPE";
@@ -37,6 +42,23 @@ namespace VIIL
 		}
 
 		return message;
+	}
+
+	ShaderType textNameToGlfwShaderType(const std::string& shaderName)
+	{
+		if (shaderName._Equal(SHADER_VERTEX))
+		{
+			return ShaderType::vertex;
+		}
+		else if (shaderName._Equal(SHADER_FRAGMENT))
+		{
+			return ShaderType::fragment;
+		}
+		else
+		{
+			VL_ENGINE_ERROR("Unknown shader name, unable to convert to shader type: {0}", shaderName);
+			return ShaderType::unknownShaderType;
+		}
 	}
 
 	unsigned int compileShader(unsigned int shaderType, const std::string& source)
@@ -127,6 +149,52 @@ namespace VIIL
 		return shaderId;
 	}
 
+	std::vector<ShaderInfo> getShaderProgramFromFile(const std::shared_ptr<File>& shaderFile)
+	{
+		std::vector<ShaderInfo> shaders;
+
+		shaderFile->open();
+		{
+			ShaderInfo newInfo;
+			std::string shaderSrc;
+			std::string lineBuffer;
+			bool readingShader = false;
+			while (!shaderFile->isEndOfFile())
+			{
+				lineBuffer = shaderFile->getLine();
+
+				if (lineBuffer._Starts_with("//"))
+				{}
+				else if (lineBuffer._Starts_with(SHADER_KEYWORD))
+				{
+					if (readingShader)
+					{
+						newInfo.source = shaderSrc;
+						shaderSrc = "";
+						shaders.push_back(newInfo);
+
+						newInfo = ShaderInfo();
+					}
+
+					std::string shaderType = trim(lineBuffer, SHADER_KEYWORD);
+					ShaderType type = textNameToGlfwShaderType(trim(shaderType));
+					newInfo.type = type;
+					readingShader = true;
+				}
+				else
+				{
+					shaderSrc.append(lineBuffer);
+				}
+			}
+
+			newInfo.source = shaderSrc;
+			shaders.push_back(newInfo);
+		}
+		shaderFile->close();
+
+		return shaders;
+	}
+
 	OpenGLShader::OpenGLShader(const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile):
 		shaderId(0)
 	{
@@ -142,6 +210,14 @@ namespace VIIL
 		std::vector<ShaderInfo> shaders;
 		shaders.push_back({ vertexSrc, ShaderType::vertex });
 		shaders.push_back({ fragmentSrc, ShaderType::fragment });
+		shaderId = compileProgram(shaders);
+	}
+
+	OpenGLShader::OpenGLShader(const std::shared_ptr<File>& shaderSrc):
+		shaderId(0)
+	{
+		std::vector<ShaderInfo> shaders = getShaderProgramFromFile(shaderSrc);
+
 		shaderId = compileProgram(shaders);
 	}
 

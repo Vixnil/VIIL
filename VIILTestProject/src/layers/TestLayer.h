@@ -28,11 +28,8 @@ public:
 			-50.0f,  50.0f, .0f,  .0f, 1.0f
 		};
 
-		std::shared_ptr<VIIL::File> vertexSource = VIIL::createFile("src/shaders/myTestShader/vertex.glsl");
-		std::shared_ptr<VIIL::File>  fragmentSource = VIIL::createFile("src/shaders/myTestShader/fragment.glsl");
-
 		ring = VIIL::Texture2D::create("resources/images/rings_3.png");
-		myShader = VIIL::Shader::Create(vertexSource, fragmentSource);
+		myShader = VIIL::Shader::Create(VIIL::createFile("src/shaders/myTestShader/TestShaderProgram.glsl"));
 
 		int slotToBind = 0;
 		ring->bind(slotToBind);
@@ -153,11 +150,6 @@ public:
 		{
 			modRot = { modRot.x + camMovementAmount, modRot.y , modRot.z };
 		}
-	}
-
-	void onEvent(VIIL::Event& event) override
-	{
-		VIIL::EventDispatcher dispatcher(event);
 	}
 
 };

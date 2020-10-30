@@ -31,14 +31,11 @@ public:
 		std::shared_ptr<VIIL::File> vertexSource = VIIL::createFile("src/shaders/myTestShader/vertex.glsl");
 		std::shared_ptr<VIIL::File>  fragmentSource = VIIL::createFile("src/shaders/myTestShader/fragment.glsl");
 
-		//colour = texture(image, textureCoords);
-		//colour = vec4(textureCoords, 1, 1);
 		ring = VIIL::Texture2D::create("resources/images/rings_3.png");
 		myShader = VIIL::Shader::Create(vertexSource, fragmentSource);
 
 		int slotToBind = 0;
 		ring->bind(slotToBind);
-		//myShader->setUniformFloat2("inTextureCoords", glm::vec2({ 1, 1 }));
 		myShader->setUniformInt("image", slotToBind);
 
 		vArray = VIIL::VertexArray::Create();
@@ -61,31 +58,28 @@ public:
 
 	void onUpdate(float deltaTime) override
 	{
-		VIIL::InputCache& input = VIIL::InputCache::get();
-		auto modLoc = myCam.getLocation();
-		auto modRot = myCam.getRotation();
-
 		float camMovementAmount = deltaTime * 1;
 		float objMovementAmount = deltaTime * 25;
 
-		if (input.isKeyPressed(VIIL::W))
-		{
-			modLoc = { modLoc.x, modLoc.y + camMovementAmount, modLoc.z };
-		}
-		else if (input.isKeyPressed(VIIL::S))
-		{
-			modLoc = { modLoc.x, modLoc.y - camMovementAmount, modLoc.z };
-		}
+		modifyCameraLocationPerUserInput(myCam.getLocation(), camMovementAmount);
+		modifyCameraRotationPerUserInput(myCam.getRotation(), camMovementAmount);
+		modifyObjectLocationPerUserInput(objMovementAmount);
 
-		if (input.isKeyPressed(VIIL::A))
-		{
-			modLoc = { modLoc.x - camMovementAmount, modLoc.y, modLoc.z };
-		}
-		else if (input.isKeyPressed(VIIL::D))
-		{
-			modLoc = { modLoc.x + camMovementAmount, modLoc.y, modLoc.z };
-		}
+		myCam.setAspectRatio(VIIL::Renderer::get().getCurrentAspectRatio());
 
+		VIIL::Scene myScene = VIIL::Scene(myCam);
+		
+		glm::mat4 triangleTransform = glm::translate(glm::mat4(1.0f), trianglePos);
+		glm::mat4 triangleScale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
+
+		myScene.setObjectToScene(myShader, vArray, triangleTransform * triangleScale);
+
+		VIIL::Renderer::get().drawScene(myScene);
+	}
+
+	void modifyObjectLocationPerUserInput(float objMovementAmount)
+	{
+		VIIL::InputCache& input = VIIL::InputCache::get();
 
 		if (input.isKeyPressed(VIIL::UP_ARROW))
 		{
@@ -104,6 +98,34 @@ public:
 		{
 			trianglePos = { trianglePos.x - objMovementAmount, trianglePos.y, trianglePos.z };
 		}
+	}
+
+	void modifyCameraLocationPerUserInput(glm::vec3& modLoc, float camMovementAmount)
+	{
+		VIIL::InputCache& input = VIIL::InputCache::get();
+
+		if (input.isKeyPressed(VIIL::W))
+		{
+			modLoc = { modLoc.x, modLoc.y + camMovementAmount, modLoc.z };
+		}
+		else if (input.isKeyPressed(VIIL::S))
+		{
+			modLoc = { modLoc.x, modLoc.y - camMovementAmount, modLoc.z };
+		}
+
+		if (input.isKeyPressed(VIIL::A))
+		{
+			modLoc = { modLoc.x - camMovementAmount, modLoc.y, modLoc.z };
+		}
+		else if (input.isKeyPressed(VIIL::D))
+		{
+			modLoc = { modLoc.x + camMovementAmount, modLoc.y, modLoc.z };
+		}
+	}
+
+	void modifyCameraRotationPerUserInput(glm::vec3& modRot, float camMovementAmount)
+	{
+		VIIL::InputCache& input = VIIL::InputCache::get();
 
 		if (input.isKeyPressed(VIIL::E))
 		{
@@ -125,26 +147,12 @@ public:
 
 		if (input.isKeyPressed(VIIL::T))
 		{
-			modRot = { modRot.x- camMovementAmount, modRot.y , modRot.z };
+			modRot = { modRot.x - camMovementAmount, modRot.y , modRot.z };
 		}
 		else if (input.isKeyPressed(VIIL::G))
 		{
 			modRot = { modRot.x + camMovementAmount, modRot.y , modRot.z };
 		}
-
-		myCam.setLocation(modLoc);
-		myCam.setRotation(modRot);
-		myCam.setAspectRatio(VIIL::Renderer::get().getCurrentAspectRatio());
-
-		VIIL::Scene myScene = VIIL::Scene(myCam);
-		
-		glm::mat4 triangleTransform = glm::translate(glm::mat4(1.0f), trianglePos);
-		glm::mat4 triangleScale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f));
-
-		myScene.setObjectToScene(myShader, vArray, triangleTransform * triangleScale);
-
-		//ring->bind(0);
-		VIIL::Renderer::get().drawScene(myScene);
 	}
 
 	void onEvent(VIIL::Event& event) override

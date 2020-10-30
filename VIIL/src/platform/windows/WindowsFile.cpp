@@ -27,7 +27,7 @@ namespace VIIL
 		}
 
 		inStream.close();
-		VL_ENGINE_INFO(contents);
+
 		return contents;
 	}
 }

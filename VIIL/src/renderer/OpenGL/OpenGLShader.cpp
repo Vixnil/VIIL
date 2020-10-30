@@ -69,7 +69,7 @@ namespace VIIL
 
 	uint32_t compileProgram(const std::vector<ShaderInfo>& shaderList)
 	{
-		uint32_t shaderId;
+		uint32_t shaderId = 0;
 		std::vector<unsigned int> shaderIdList;
 		bool failed = false;
 

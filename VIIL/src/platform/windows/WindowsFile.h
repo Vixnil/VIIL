@@ -16,6 +16,9 @@ namespace VIIL
 	public:
 		WindowsFile(const std::string& newFilePath);
 
+		virtual std::string getName() const override;
+		virtual std::string getExt() const override;
+
 		virtual std::string readFileToString() const override;
 		virtual void open() const override;
 		virtual void close() const override;

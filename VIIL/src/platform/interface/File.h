@@ -10,6 +10,9 @@ namespace VIIL
 		virtual ~File()
 		{}
 
+		virtual std::string getName() const = 0;
+		virtual std::string getExt() const = 0;
+
 		virtual std::string readFileToString() const = 0;
 		virtual void open() const = 0;
 		virtual void close() const = 0;

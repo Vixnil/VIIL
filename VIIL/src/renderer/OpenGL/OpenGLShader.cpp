@@ -10,6 +10,7 @@ namespace VIIL
 	static const std::string SHADER_KEYWORD = "#shader";
 	static const std::string SHADER_VERTEX = "Vertex";
 	static const std::string SHADER_FRAGMENT = "Fragment";
+	static const std::string SHADER_EXT = ".glsl";
 
 	enum ShaderType : GLenum
 	{
@@ -153,8 +154,10 @@ namespace VIIL
 	{
 		std::vector<ShaderInfo> shaders;
 
-		shaderFile->open();
+		if (shaderFile->getExt()._Equal(SHADER_EXT))
 		{
+			shaderFile->open();
+			
 			ShaderInfo newInfo;
 			std::string shaderSrc;
 			std::string lineBuffer;
@@ -164,7 +167,8 @@ namespace VIIL
 				lineBuffer = shaderFile->getLine();
 
 				if (lineBuffer._Starts_with("//"))
-				{}
+				{
+				}
 				else if (lineBuffer._Starts_with(SHADER_KEYWORD))
 				{
 					if (readingShader)
@@ -189,14 +193,19 @@ namespace VIIL
 
 			newInfo.source = shaderSrc;
 			shaders.push_back(newInfo);
+			
+			shaderFile->close();
 		}
-		shaderFile->close();
+		else
+		{
+			VL_ENGINE_ERROR("Invalid extension when compiling shader. Expected: {0}  Recevied: {1}", SHADER_EXT, shaderFile->getExt());
+		}
 
 		return shaders;
 	}
 
-	OpenGLShader::OpenGLShader(const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile):
-		shaderId(0)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile):
+		shaderId(0), name(name)
 	{
 		std::vector<ShaderInfo> shaders;
 		shaders.push_back({ vertexFile->readFileToString(), ShaderType::vertex });
@@ -204,8 +213,8 @@ namespace VIIL
 		shaderId = compileProgram(shaders);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc):
-		shaderId(0)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc):
+		shaderId(0), name(name)
 	{
 		std::vector<ShaderInfo> shaders;
 		shaders.push_back({ vertexSrc, ShaderType::vertex });
@@ -214,11 +223,13 @@ namespace VIIL
 	}
 
 	OpenGLShader::OpenGLShader(const std::shared_ptr<File>& shaderSrc):
-		shaderId(0)
+		shaderId(0), name(shaderSrc->getName())
 	{
 		std::vector<ShaderInfo> shaders = getShaderProgramFromFile(shaderSrc);
 
 		shaderId = compileProgram(shaders);
+
+		VL_ENGINE_INFO("Shader name is: {0}", name);
 	}
 
 	OpenGLShader::~OpenGLShader()
@@ -309,6 +320,11 @@ namespace VIIL
 			glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(vp));
 		}
 		Unbind();
+	}
+
+	std::string OpenGLShader::getName() const
+	{
+		return name;
 	}
 
 	void OpenGLShader::Bind() const

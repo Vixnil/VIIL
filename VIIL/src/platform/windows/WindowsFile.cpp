@@ -11,6 +11,21 @@ namespace VIIL
 		filePath = newFilePath;
 	}
 
+	std::string WindowsFile::getExt() const
+	{
+		int indexStart = filePath.find_last_of(".");
+
+		return filePath.substr(indexStart, filePath.length());
+	}
+
+	std::string WindowsFile::getName() const
+	{
+		int indexStart = filePath.find_last_of("\\/") + 1;
+		int indexEnd = filePath.rfind(".");
+
+		return filePath.substr(indexStart, (indexEnd == std::string::npos)? 0 - indexStart : indexEnd - indexStart);
+	}
+
 	void WindowsFile::open() const
 	{
 		inStream.open(filePath);

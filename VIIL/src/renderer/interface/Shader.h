@@ -14,6 +14,8 @@ namespace VIIL
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual std::string getName() const = 0;
+
 		virtual void setUniformInt(const std::string& uniformName, int& vp) = 0;
 
 		virtual void setUniformFloat(const std::string& uniformName, float& vp) = 0;
@@ -25,8 +27,8 @@ namespace VIIL
 		virtual void setUniformMatrix4(const std::string& uniformName, glm::mat4& vp) = 0;
 		
 		static std::shared_ptr<Shader> Create(const std::shared_ptr<File>& shaderSrc);
-		static std::shared_ptr<Shader> Create(const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile);
-		static std::shared_ptr<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
+		static std::shared_ptr<Shader> Create(const std::string& name, const std::shared_ptr<File>& vertexFile, const std::shared_ptr<File>& fragmentFile);
+		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
 	};
 
 }

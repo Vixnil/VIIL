@@ -19,6 +19,7 @@
 
 #include "renderer/Renderer.h"
 #include "renderer/Camera.h"
+#include "renderer/CameraController.h"
 #include "renderer/Scene.h"
 #include "renderer/interface/IndexBuffer.h"
 #include "renderer/interface/Shader.h"

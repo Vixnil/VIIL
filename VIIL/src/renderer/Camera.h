@@ -8,7 +8,7 @@ namespace VIIL
 
 	struct ViewBoundary
 	{
-		float left, right, bottom, top, nearView, farView;
+		float left, right, bottom, top, nearView = -100, farView = 100;
 	};
 
 	class Camera
@@ -34,13 +34,15 @@ namespace VIIL
 		virtual void setRotation(glm::vec3 rot) = 0;
 		virtual void setAspectRatio(float asptRt) = 0;
 		virtual void setFieldOfView(float fov) = 0;
+		virtual inline void setBoundary(ViewBoundary newBoundary) { boundary = newBoundary; }
 
 		virtual glm::mat4 getViewMatrix() const = 0;
 		virtual glm::mat4 getProjectionMatrix() const = 0;
-		virtual float getAspectRatio() const { return aspectRatio; }
+		virtual inline float getAspectRatio() const { return aspectRatio; }
+		virtual inline float getFieldOfView() const { return fieldOfView; }
 
-		virtual glm::vec3& getLocation() { return location; }
-		virtual glm::vec3& getRotation() { return rotation; }
+		virtual inline glm::vec3& getLocation() { return location; }
+		virtual inline glm::vec3& getRotation() { return rotation; }
 
 		virtual ~Camera()
 		{};
@@ -62,6 +64,24 @@ namespace VIIL
 		virtual glm::mat4 getProjectionMatrix() const;
 
 		virtual ~CameraOrthographic();
+	};
+
+	class CameraPerspective : public Camera
+	{
+	public:
+		CameraPerspective();
+		CameraPerspective(float aspectRt);
+		CameraPerspective(ViewBoundary bounds, glm::vec3 loc, glm::vec3 rot, float asptRt, float fov);
+
+		virtual void setLocation(glm::vec3 loc);
+		virtual void setRotation(glm::vec3 rot);
+		virtual void setAspectRatio(float asptRt);
+		virtual void setFieldOfView(float fov);
+
+		virtual glm::mat4 getViewMatrix() const;
+		virtual glm::mat4 getProjectionMatrix() const;
+
+		virtual ~CameraPerspective();
 	};
 
 }

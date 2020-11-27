@@ -13,7 +13,8 @@ out vec2 textureCoords;
 void main()
 {
 	textureCoords = inTextureCoords;
-	gl_Position = ((vpMatrix * objTransformMatrix) * (vec4(aspectRatio, 1, 1, 1) * vec4(myPosition, 1)));
+	//gl_Position = ((vpMatrix * objTransformMatrix) * (vec4(aspectRatio, 1, 1, 1) * vec4(myPosition, 1)));
+	gl_Position = ((vpMatrix * objTransformMatrix) * (vec4(myPosition, 1)));
 }
 
 #shader Fragment

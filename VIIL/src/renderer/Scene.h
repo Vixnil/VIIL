@@ -1,6 +1,7 @@
 #pragma once
 #include "core/standardUse.h"
 #include "renderer/Camera.h"
+#include "renderer/CameraController.h"
 #include "renderer/interface/Shader.h"
 #include "renderer/interface/VertexArray.h"
 
@@ -21,6 +22,11 @@ namespace VIIL
 	public:
 		Scene() = delete;
 
+		Scene(CameraController& camControl) :
+			viewProjection(camControl.getViewProjectionMatrix()), aspectRatio(camControl.getAspectRatio())
+		{
+		}
+
 		Scene(Camera& cam):
 			viewProjection(cam.getViewMatrix() * cam.getProjectionMatrix()), aspectRatio(cam.getAspectRatio())
 		{
@@ -33,11 +39,6 @@ namespace VIIL
 			shader->setUniformFloat("aspectRatio", aspectRatio);
 
 			std::vector<std::shared_ptr<VertexBuffer>> list = vArray->getVertexBuffers();
-
-			for (std::shared_ptr<VertexBuffer> vBuff : list)
-			{
-				//vBuff->
-			}
 
 			toRenderList.push_back({shader, vArray}); 
 		}

@@ -6,8 +6,6 @@
 namespace VIIL
 {
 
-#define bindEventHandler(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::applicationInstance = nullptr;
 
 	Application::Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef):
@@ -37,7 +35,7 @@ namespace VIIL
 		}
 		else
 		{
-			appWindow->setEventCallback(bindEventHandler(OnEvent));
+			appWindow->setEventCallback(bindEventHandler(Application::OnEvent));
 		}
 	}
 
@@ -69,10 +67,8 @@ namespace VIIL
 
 	void Application::OnEvent(Event& event)
 	{
-	//	VL_ENGINE_TRACE("Event occured: {0}", event.ToString());
-
 		EventDispatcher dispatcher(event);
-		dispatcher.dispatch<WindowClose>(bindEventHandler(windowCloseHandler));
+		dispatcher.dispatch<WindowClose>(bindEventHandler(Application::windowCloseHandler));
 
 		if (!event.isHandled())
 		{

@@ -68,6 +68,8 @@ namespace VIIL
 		const char* src = source.c_str();
 		int isCompiled = 0;
 
+	//	VL_ENGINE_INFO("Compiling shader: \n{0}", source);
+
 		glShaderSource(shader, 1, &src, 0);
 		glCompileShader(shader);
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
@@ -164,7 +166,7 @@ namespace VIIL
 			bool readingShader = false;
 			while (!shaderFile->isEndOfFile())
 			{
-				lineBuffer = shaderFile->getLine();
+				lineBuffer = trim(shaderFile->getLine(), " \t");
 
 				if (lineBuffer._Starts_with("//"))
 				{
@@ -228,8 +230,6 @@ namespace VIIL
 		std::vector<ShaderInfo> shaders = getShaderProgramFromFile(shaderSrc);
 
 		shaderId = compileProgram(shaders);
-
-		VL_ENGINE_INFO("Shader name is: {0}", name);
 	}
 
 	OpenGLShader::~OpenGLShader()

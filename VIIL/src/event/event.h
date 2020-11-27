@@ -3,6 +3,7 @@
 
 namespace VIIL
 {
+	#define bindEventHandler(x) std::bind(&x, this, std::placeholders::_1)
 
 	enum class EventType : int
 	{

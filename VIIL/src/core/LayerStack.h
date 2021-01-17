@@ -6,6 +6,11 @@ namespace VIIL
 {
 	using LayerVector = std::vector<std::shared_ptr<Layer>>;
 
+	/*
+	* Object to handle vector operations on a list of Layer objects.
+	* To support rendering, introducing the concept of an overlay to add to
+	* the end of the vector instead of only adding to the front.
+	*/
 	class LayerStack
 	{
 		LayerVector layerList;

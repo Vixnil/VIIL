@@ -13,6 +13,11 @@ public:
 		pushOverlay(std::shared_ptr<TestLayer>(new TestLayer()));
 	}
 
+	~TestApp()
+	{
+		VL_APP_TRACE("Test App Destroyed.");
+	}
+
 };
 
 std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplication()

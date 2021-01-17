@@ -5,7 +5,10 @@
 
 namespace VIIL
 {
-
+	/*
+	* Object to be stored in a stack to represent an object to handle things
+	* such as rendering and events.
+	*/
 	class Layer
 	{
 	protected:

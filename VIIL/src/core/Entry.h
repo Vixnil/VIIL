@@ -4,6 +4,7 @@
 #include "core/Application.h"
 
 #ifdef VIIL_PLATFORM_WINDOWS
+//Need to make this function available to users of the engine to implement thier own application sub class.
 extern std::unique_ptr<VIIL::Application, VIIL::ApplicationDeleter> VIIL::createApplication();
 
 int main(int argc, char** argv)

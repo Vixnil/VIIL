@@ -54,6 +54,7 @@ namespace VIIL
 
 }
 
+//No need to log on a release build.
 #ifdef VIIL_BUILD_RLS
 #define VL_ENGINE_TRACE(...)
 #define VL_ENGINE_INFO(...)

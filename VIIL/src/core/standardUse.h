@@ -1,5 +1,8 @@
 #pragma once
 
+//Pre-compiled header
+//Used to bundle commonly used libraries together
+
 #include <string>
 #include <functional>
 #include <sstream>

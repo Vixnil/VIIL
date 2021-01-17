@@ -85,7 +85,7 @@ namespace VIIL
 
 	bool CameraOrthographicController::OnWindowResize(WindowResize& e)
 	{
-		aspectRatio = (float) e.getWdith() / (float) e.getHeight();
+		aspectRatio = ((float) e.getWidth()) / ((float) e.getHeight());
 
 		camera.setBoundary({ -aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel });
 

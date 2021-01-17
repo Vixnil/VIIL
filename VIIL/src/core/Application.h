@@ -10,6 +10,7 @@ namespace VIIL
 	{
 		//Class variable used to stop application running in the run method
 		bool appIsRunning;
+		bool appIsMinimized;
 		std::shared_ptr<Window> appWindow;
 		VIIL::LayerStack layerStack;
 
@@ -37,6 +38,7 @@ namespace VIIL
 
 	private:
 		bool windowCloseHandler(WindowClose& event);
+		bool windowResizeHandler(WindowResize& event);
 
 		unsigned int vertexArray, vertexBuffer, indexBuffer;
 	};

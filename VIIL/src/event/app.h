@@ -25,7 +25,7 @@ namespace VIIL
 			width(w), height(h)
 		{}
 
-		inline unsigned int getWdith() { return width; }
+		inline unsigned int getWidth() { return width; }
 		inline unsigned int getHeight() { return height; }
 
 		std::string ToString() const override

@@ -36,6 +36,11 @@ namespace VIIL
 			return (float)appWindow->getHeight() / (float)appWindow->getWidth();
 		}
 
+		static void onWindowResize(uint32_t width, uint32_t height)
+		{
+			RendererAction::onWindowResize(0, 0, width, height);
+		}
+
 		static void drawScene(Scene& scene)
 		{
 			std::vector<SceneObjects> sceneVec = scene.getObjectsInScene();

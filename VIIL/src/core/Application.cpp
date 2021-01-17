@@ -9,7 +9,7 @@ namespace VIIL
 	Application* Application::applicationInstance = nullptr;
 
 	Application::Application(VIIL::LEVEL engineLogLevel, const LogConfig& appLogData, VIIL::Window::WindowData windDef):
-		appIsRunning(true), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
+		appIsRunning(true), appIsMinimized(false), appLogConfig(appLogData.logName, appLogData.logPatrn, appLogData.logLevel), engineLogLevel(engineLogLevel)
 	{
 		VIIL::LogConfig engineConfig("VIIL", VIIL::Logger::defaultLogPattern, this->engineLogLevel);
 		VIIL::Logger::init(engineConfig, this->appLogConfig);
@@ -52,12 +52,15 @@ namespace VIIL
 			float timeStep = currTime - lastFrameTime;
 			lastFrameTime = currTime;
 
-			for (layerPtnr layer : layerStack)
+			if (!appIsMinimized)
 			{
-				layer->onUpdate(timeStep);
+				for (layerPtnr layer : layerStack)
+				{
+					layer->onUpdate(timeStep);
+				}
 			}
 
-			MousePosition& pos = InputCache::get().getMousePosition();
+			//MousePosition& pos = InputCache::get().getMousePosition();
 
 			appWindow->update();
 		}
@@ -69,6 +72,7 @@ namespace VIIL
 	{
 		EventDispatcher dispatcher(event);
 		dispatcher.dispatch<WindowClose>(bindEventHandler(Application::windowCloseHandler));
+		dispatcher.dispatch<WindowResize>(bindEventHandler(Application::windowResizeHandler));
 
 		if (!event.isHandled())
 		{
@@ -92,6 +96,22 @@ namespace VIIL
 		event.setHandled(true);
 
 		return true;
+	}
+
+	bool Application::windowResizeHandler(WindowResize& event)
+	{
+
+		if (event.getWidth() == 0 || event.getHeight() == 0)
+		{
+			appIsMinimized = true;
+		}
+		else
+		{
+			appIsMinimized = false;
+			Renderer::onWindowResize(event.getWidth(), event.getHeight());
+		}
+
+		return false;
 	}
 
 	void Application::pushLayer(layerPtnr layer)

@@ -6,7 +6,9 @@
 
 namespace VIIL
 {
-
+	/*
+	* Platform/Rendering API independent rendering library. 
+	*/
 	class RendererLibrary
 	{
 	public:

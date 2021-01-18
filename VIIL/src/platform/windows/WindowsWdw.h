@@ -4,6 +4,9 @@
 
 namespace VIIL
 {
+	/*
+	* Microsoft Windows OS implementation of the window class
+	*/
 	class WindowsWdw : public Window
 	{
 	public:

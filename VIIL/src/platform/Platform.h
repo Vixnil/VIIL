@@ -5,6 +5,9 @@
 
 namespace VIIL
 {
+	/*
+	* Base class to be extended for each operating system VIIL supports
+	*/
 	class Platform
 	{
 		std::unique_ptr<Clock> platformClock;

@@ -4,7 +4,10 @@
 
 namespace VIIL
 {
-
+	/*
+	* Provides the functionality used by the Renderer. Acts as an inbetween for the Renderer and the
+	* platform independent rendering API.
+	*/
 	class RendererAction
 	{
 		static std::unique_ptr<RendererLibrary> rendererLib;

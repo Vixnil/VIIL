@@ -3,6 +3,13 @@
 
 namespace VIIL
 {
+	/*
+	* List of all key codes available to be used in the VIIL engine. 
+	* 
+	* Key codes originating from other platforms or api should be converted to the VIIL_KeyCode type
+	* before being consumed by VIIL API.
+	* 
+	*/
 	enum VIIL_KeyCode : int
 	{
 		UNKNOWN = -1
@@ -17,6 +24,12 @@ namespace VIIL
 		, LAST_KEY_CODE_IN_USE
 	};
 
+	/*
+	* List of all mouse button codes available to be used in the VIIL engine.
+	* 
+	* Mouse button codes originating from other platforms or api should be converted to the VILL_MouseCode type
+	* before being consumed by VIIL API
+	*/
 	enum VIIL_MouseCode : int
 	{
 		BTN_UNKNOWN = -1
@@ -29,16 +42,30 @@ namespace VIIL
 		, BTN_7
 		, BTN_8
 		, BTN_LAST_CODE_IN_USE
+		//Defining some values in more descriptive terms for ease of use.
 		, BTN_LEFT = BTN_1
 		, BTN_RIGHT = BTN_2
 		, BTN_MIDDLE = BTN_3
 	};
 
+	/*
+	* Structure used to keep track of the mouse x/y position on a window
+	*/
 	struct MousePosition
 	{
 		float posX, posY;
 	};
 
+	/*
+	* Singleton class used to keep track of the current state of user input.
+	* 
+	* Useful when capturing input events as they happpen is not ideal but polling
+	* of user input is still needed.
+	* 
+	* Events, when triggered, will update the InputCache for the pressed state for each button
+	* as well as keep track of the mouse position via the mouse moved event. So capturing events
+	* of user input is not required.
+	*/
 	class InputCache
 	{
 		bool keyCache[VIIL_KeyCode::LAST_KEY_CODE_IN_USE];

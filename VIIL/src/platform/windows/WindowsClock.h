@@ -4,7 +4,9 @@
 
 namespace VIIL
 {
-
+	/*
+	* Microsoft Windows OS implementation of the Clock class
+	*/
 	class WindowsClock : public Clock
 	{
 	public:

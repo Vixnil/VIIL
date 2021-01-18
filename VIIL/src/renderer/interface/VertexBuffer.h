@@ -3,6 +3,9 @@
 
 namespace VIIL
 {
+	/*
+	* Data types VIIL shaders accept
+	*/
 	enum class ShaderDataType
 	{
 		TYPE_UNKNOWN = -1
@@ -12,6 +15,9 @@ namespace VIIL
 		,BOOL
 	};
 
+	/*
+	* Provides data size value based on given data type.
+	*/
 	static uint32_t shaderDataTypeCount(ShaderDataType type)
 	{
 		switch (type)
@@ -74,6 +80,11 @@ namespace VIIL
 		}
 	}
 
+	/*
+	* Object of a single element or data structure to be passed to a shader.
+	* Keeps track of various data information including size and location of data in a 
+	* buffer list.
+	*/
 	struct BufferElement
 	{
 		std::string name;
@@ -98,6 +109,11 @@ namespace VIIL
 		}
 	};
 
+	/*
+	* Object to define the layout of shader elements and take care
+	* of some of the tediousness needed to define the structure of data
+	* passed to a shader.
+	*/
 	class BufferLayout
 	{
 		using BufferElementsVec = std::vector<BufferElement>;
@@ -137,6 +153,9 @@ namespace VIIL
 		inline const std::vector<BufferElement>& getElements() const { return elements; }
 	};
 
+	/*
+	* Platform/Rendering API independent Vertex buffer class
+	*/
 	class VertexBuffer
 	{
 	public:

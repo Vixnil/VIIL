@@ -13,6 +13,11 @@ namespace VIIL
 		std::shared_ptr<VertexArray> vArray;
 	};
 
+	/*
+	* An object to keep track of all things getting ready to be rendered
+	* and how they should be rendered. Allows for developers to store frequently needed
+	* set views as a Scene object that just needs to be sent to the renderer to be rendered.
+	*/
 	class Scene
 	{
 		std::vector<SceneObjects> toRenderList;

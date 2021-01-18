@@ -3,6 +3,9 @@
 
 namespace VIIL
 {
+	/*
+	* Platform/Rendering API independent base Texture class
+	*/
 	class Texture
 	{
 	public:
@@ -13,6 +16,9 @@ namespace VIIL
 		virtual void bind(uint32_t textureSlot) const = 0;
 	};
 
+	/*
+	* Platform/Rendering API independent 2D Texture class
+	*/
 	class Texture2D : public Texture
 	{
 	public:

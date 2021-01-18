@@ -3,7 +3,9 @@
 
 namespace VIIL
 {
-
+	/*
+	* Platform independent class for handling file actions, such as read/write
+	*/
 	class File
 	{
 	public:

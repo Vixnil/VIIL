@@ -5,7 +5,10 @@
 
 namespace VIIL
 {
-
+	
+	/*
+	* Platform/Rendering API independent Vertex Array
+	*/
 	class VertexArray
 	{
 	public:

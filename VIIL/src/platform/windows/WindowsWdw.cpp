@@ -11,7 +11,7 @@ namespace VIIL
 	}
 
 	/*
-	* NOTE: Can only be called on the main thread
+	* NOTE: Can only be called on the main thread due to OpenGL restrictions
 	*/
 	void WindowsWdw::initializeWindow(const WindowData& winData)
 	{

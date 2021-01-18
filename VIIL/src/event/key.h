@@ -5,6 +5,9 @@
 
 namespace VIIL
 {
+	/*
+	* Super class for key related events.
+	*/
 	class KeyEvent : public Event
 	{
 	protected:
@@ -20,6 +23,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Key | EVTCAT_Input)
 	};
 
+	/*
+	* Event used for key pressed actions
+	*/
 	class KeyPressedEvent : public KeyEvent
 	{
 	protected:
@@ -42,6 +48,9 @@ namespace VIIL
 		EVENT_CLASS_TYPE(KeyPressed)
 	};
 
+	/*
+	* Event to be used for key released events 
+	*/
 	class KeyReleasedEvent : public KeyEvent
 	{
 	public:

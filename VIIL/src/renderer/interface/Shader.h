@@ -6,6 +6,9 @@
 
 namespace VIIL
 {
+	/*
+	* Platform/Rendering API independent Shader class
+	*/
 	class Shader
 	{
 	public:

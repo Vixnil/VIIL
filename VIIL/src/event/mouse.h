@@ -5,7 +5,10 @@
 
 namespace VIIL
 {
-
+	
+	/*
+	* Super class for mouse button events
+	*/
 	class MouseButtonEvent : public Event
 	{
 	protected:
@@ -18,6 +21,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Mouse | EVTCAT_MouseButton | EVTCAT_Input)
 	};
 		
+	/*
+	* Event for mouse button pressed events
+	*/
 	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
@@ -37,6 +43,9 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseButtonPressed)
 	};
 
+	/*
+	* Event for mouse button released events
+	*/
 	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
@@ -56,6 +65,9 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseButtonReleased)
 	};
 
+	/*
+	* Event for handling when the mouse scroll wheel is moved.
+	*/
 	class MouseScrolledEvent : public Event
 	{
 		float xDiff, yDiff;
@@ -79,6 +91,9 @@ namespace VIIL
 		EVENT_CLASS_TYPE(MouseScrolled)
 	};
 
+	/*
+	* Event for handling when the cursor on a window is moved
+	*/
 	class MouseMovedEvent : public Event
 	{
 		float x, y;

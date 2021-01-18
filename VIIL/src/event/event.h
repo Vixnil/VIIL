@@ -3,8 +3,12 @@
 
 namespace VIIL
 {
+	//Quick little definition to bind a given function as an event handler
 	#define bindEventHandler(x) std::bind(&x, this, std::placeholders::_1)
 
+	/*
+	* List of event types
+	*/
 	enum class EventType : int
 	{
 		BadEvent = 0,
@@ -21,6 +25,9 @@ namespace VIIL
 		MouseScrolled
 	};
 
+	/*
+	* List of event categories
+	*/
 	enum EventCategory : unsigned int
 	{
 		EVTCAT_BadCategory = 0,
@@ -37,6 +44,9 @@ namespace VIIL
 
 	#define EVENT_CLASS_CATEGORY(cat) virtual int getCategoryFlags() const override { return cat; }
 
+	/*
+	* Base event class to be extended by and implemented in specific event types.
+	*/
 	class Event
 	{
 		friend class EventDispatcher;
@@ -58,6 +68,10 @@ namespace VIIL
 		bool handled = false;
 	};
 
+	/*
+	* Provides functionality to dispatch events to a provided event handler.
+	* Only handles events of type T, other events will be ignored and the hanlder not called.
+	*/
 	class EventDispatcher
 	{
 	private:

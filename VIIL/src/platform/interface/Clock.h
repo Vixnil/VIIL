@@ -4,6 +4,10 @@
 namespace VIIL
 {
 
+	/*
+	* Platform independent class to allow getting of system time and similar
+	* time based api.
+	*/
 	class Clock
 	{
 	public:

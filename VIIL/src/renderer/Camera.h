@@ -5,12 +5,17 @@
 
 namespace VIIL
 {
-
+	/*
+	* Define the boundaries of what can be seen by a camera
+	*/
 	struct ViewBoundary
 	{
 		float left, right, bottom, top, nearView = -100, farView = 100;
 	};
 
+	/*
+	* Base Camera class to be extended for the different types of camera projections.
+	*/
 	class Camera
 	{
 	protected:
@@ -48,6 +53,9 @@ namespace VIIL
 		{};
 	};
 
+	/*
+	* orthographic camera, mostly for 2D views.
+	*/
 	class CameraOrthographic : public Camera
 	{
 	public:
@@ -66,6 +74,10 @@ namespace VIIL
 		virtual ~CameraOrthographic();
 	};
 
+	/*
+	* Perspective camera, most for 3D views.
+	* TODO: Actually make this work, not usable yet.
+	*/
 	class CameraPerspective : public Camera
 	{
 	public:

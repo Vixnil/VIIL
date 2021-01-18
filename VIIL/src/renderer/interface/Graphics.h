@@ -6,6 +6,9 @@ struct GraphicsDeleter;
 
 namespace VIIL
 {
+	/*
+	* Platform/Rendering API independent graphics class.
+	*/
 	class Graphics
 	{
 	protected:

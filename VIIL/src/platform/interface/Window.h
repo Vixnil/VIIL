@@ -8,6 +8,9 @@
 
 namespace VIIL
 {
+	/*
+	* Platform independent class for handling Window creation and management
+	*/
 	class Window
 	{
 	public:

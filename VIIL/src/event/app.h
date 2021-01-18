@@ -5,6 +5,9 @@
 namespace VIIL
 {
 
+	/*
+	* Event to be triggered when a window is closed
+	*/
 	class WindowClose : public Event
 	{
 
@@ -17,6 +20,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
+	/*
+	* Event to be used when a window is resized, includes minimized
+	*/
 	class WindowResize : public Event
 	{
 		unsigned int width, height;
@@ -39,6 +45,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
+	/*
+	* Event to be used when a window gains focus
+	*/
 	class WindowFocus : public Event
 	{
 
@@ -50,6 +59,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
+	/*
+	* Event to be used when a window loses focus
+	*/
 	class WindowLoseFocus : public Event
 	{
 
@@ -61,6 +73,9 @@ namespace VIIL
 		EVENT_CLASS_CATEGORY(EVTCAT_Application)
 	};
 
+	/*
+	* Event to be used when a window is moved on the screen.
+	*/
 	class WindowMove : public Event
 	{
 

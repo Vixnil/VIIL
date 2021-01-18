@@ -9,6 +9,9 @@
 namespace VIIL
 {
 
+	/*
+	* Default keys used to manually control a camera.
+	*/
 	struct CameraControllerKeys
 	{
 		//Translation
@@ -22,6 +25,9 @@ namespace VIIL
 		VIIL_KeyCode keyRotRight = VIIL_KeyCode::E;
 	};
 
+	/*
+	* Base controller class to provide functionality for commonly needed camera features.
+	*/
 	class CameraController
 	{
 	protected:
@@ -42,6 +48,10 @@ namespace VIIL
 		virtual void OnEvent(Event& e) = 0;
 	};
 
+	/*
+	* Orthographic camera controller, provides functionality normally needed to control
+	* an orthographic type camera.
+	*/
 	class CameraOrthographicController : public CameraController
 	{
 		const float BASE_MOVE_SPEED = 1.0f;

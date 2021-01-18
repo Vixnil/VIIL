@@ -4,6 +4,11 @@
 namespace VIIL
 {
 
+	/*
+	* Platform/Rendering API independent index buffer.
+	* TODO: Might not be needed or may need to be reworked when more than just
+	* OpenGL is implemented as DirectX does not use the concept of index buffers.
+	*/
 	class IndexBuffer
 	{
 	public:

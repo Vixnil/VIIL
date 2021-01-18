@@ -9,6 +9,9 @@
 
 namespace VIIL
 {
+	/*
+	* High level API to control and provide ability to render to a window.
+	*/
 	class Renderer
 	{
 		static RendererLibrary::Type type;

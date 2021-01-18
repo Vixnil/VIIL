@@ -4,6 +4,11 @@
 
 namespace VIIL
 {
+	/*
+	* Wrapper for a map of shaders to be loaded and reused on demand.
+	* Allows developers to load shaders once as needed and they will stay in
+	* memory until the application is done.
+	*/
 	class ShaderLibrary
 	{
 		std::unordered_map <std::string, std::shared_ptr<Shader>> shaderMap;

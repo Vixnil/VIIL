@@ -7,6 +7,9 @@
 namespace VIIL
 {
 
+	/*
+	* Microsoft Windows OS implementation of the File class
+	*/
 	class WindowsFile : public File
 	{
 		std::string filePath;

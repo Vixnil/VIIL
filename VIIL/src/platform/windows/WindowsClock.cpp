@@ -4,7 +4,11 @@
 
 namespace VIIL
 {
-
+	/*
+	* TODO: This should not use OpenGL to get system time
+	* since eventually VIIL should be able to support platform specific
+	* graphics API and OpenGL may not be used, which should not break the Clock class.
+	*/
 	float WindowsClock::getCurrentTime()
 	{
 		return (float)glfwGetTime();
